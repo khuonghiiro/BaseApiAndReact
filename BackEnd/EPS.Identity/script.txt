@@ -1,0 +1,13 @@
+-- Generate code EF from existing database
+dotnet ef dbcontext scaffold "Server=.\\SQLEXPRESS;Database=EPS;Integrated Security=true;" Oracle.EntityFrameworkCore -p EPS.Data -o Entities
+-- Add migrations to update to database
+dotnet ef migrations add MyMigration -p EPS.Data
+-- Update migration to database
+dotnet ef database update -p EPS.Data
+
+-- add db
+    add-migration Updateddmm
+-- update
+    update-database –verbose
+-- remove
+    remove-migration

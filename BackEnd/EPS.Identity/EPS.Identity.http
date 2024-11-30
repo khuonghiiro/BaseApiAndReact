@@ -1,0 +1,6 @@
+@EPS.Identity_HostAddress = http://localhost:5049
+
+GET {{EPS.Identity_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

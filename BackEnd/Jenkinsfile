@@ -1,0 +1,52 @@
+pipeline {
+	agent any
+	stages {
+		stage('Restore solution') {
+			steps {
+				echo "---Restore Helpdesk Solution---"
+				bat "dotnet restore EPS.Helpdesk.sln"
+			}
+		}
+		stage('Build EPS.Gateway') {
+			steps {
+				echo "---Build EPS.Gateway---"
+				bat "dotnet build EPS.Gateway/EPS.Gateway.csproj"
+				bat "dotnet publish EPS.Gateway/EPS.Gateway.csproj --configuration Release --no-restore"
+			}
+		}
+		stage('Build EPS.Identity') {
+			steps {
+				echo "---Build EPS.Identity---"
+				bat "dotnet build EPS.Identity/EPS.Identity.csproj"
+				bat "dotnet publish EPS.Identity/EPS.Identity.csproj --configuration Release --no-restore"
+			}
+		}
+		stage('Build EPS.Services.FileUpload') {
+			steps {
+				echo "---Build EPS.Services.FileUpload---"
+				bat "dotnet build EPS.Services.FileUpload/EPS.Services.FileUpload.csproj"
+				bat "dotnet publish EPS.Services.FileUpload/EPS.Services.FileUpload.csproj --configuration Release --no-restore"
+			}
+		}
+		stage('Build EPS.Services.Helpdesk') {
+			steps {
+				echo "---Build EPS.Services.Helpdesk---"
+				bat "dotnet build EPS.Services.Helpdesk/EPS.Services.Helpdesk.csproj"
+				bat "dotnet publish EPS.Services.Helpdesk/EPS.Services.Helpdesk.csproj --configuration Release --no-restore"
+			}
+		}
+		stage('Build EPS.Services.Message') {
+			steps {
+				echo "---Build EPS.Services.Message---"
+				bat "dotnet build EPS.Services.Message/EPS.Services.Message.csproj"
+				bat "dotnet publish EPS.Services.Message/EPS.Services.Message.csproj --configuration Release --no-restore"
+			}
+		}
+		stage('Reset IIS') {
+      		steps {
+        		echo '---Reset IIS---'
+        		bat 'iisreset'
+      		}
+		}
+	}
+}
