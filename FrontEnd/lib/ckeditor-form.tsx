@@ -24,7 +24,7 @@ export const TanetCKEditor = ({
         <CKEditor
           //{...restProps}
           initData={data}
-          onChange={(evt) =>
+          onChange={(evt: any) =>
             setFieldValue(name, evt.editor.getData())
           }
           config={{

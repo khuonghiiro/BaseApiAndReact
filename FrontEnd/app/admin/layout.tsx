@@ -5,6 +5,7 @@ import { SWRConfig } from "swr";
 
 import dynamic from "next/dynamic";
 import { AuthProvider } from "@/shared/Context/appAdminContext";
+import { ToastContainer } from "react-toastify";
 const TopBar = dynamic(() => import("../components/admin/layout/top-bar"));
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -46,12 +47,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 },
               }}
             >
+              <TopBar showNav={showNav} setShowNav={setShowNav} />
               <main
                   className={`bg-[#f4f6f9] min-h-screen pt-12 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-56" : ""
                     }`}
                 >
                   <div className="mx-1 md:mx-3">{children}</div>
-                  {/* <ToastContainer
+                  <ToastContainer
                     position="bottom-right"
                     autoClose={5000}
                     hideProgressBar={false}
@@ -61,7 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover
-                  /> */}
+                  />
                 </main>
               {/* <PopupMsgProvider>
                 <TopBar showNav={showNav} setShowNav={setShowNav} />

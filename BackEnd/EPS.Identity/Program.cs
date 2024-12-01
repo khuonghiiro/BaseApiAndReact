@@ -27,6 +27,14 @@ try
     //    opt.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
     //});
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAll", builder => builder.AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true)
+               .AllowCredentials());
+    });
+
     builder.Services.AddDbContext<DataDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EPS")));
 
@@ -61,6 +69,7 @@ try
 
     // Configure the HTTP request pipeline.
     app.UseSwagger();
+    app.UseCors("AllowAll");
     app.UseSwaggerUI();
 
     app.UseHttpsRedirection();

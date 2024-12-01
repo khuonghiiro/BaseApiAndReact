@@ -53,9 +53,6 @@ export default React.memo(function TopBar({
   setShowNav: any;
 }) {
   const router = useRouter();
-
-  const { connect, disconnect, resetMessage, getMessage, getContact } = useWebSocket();
-  const { openPopups, setOpenPopups, onActiveUserId, handleRemoveUserPopup } = usePopupMsgContext();
   
   const { logout, user } = useAuth();
 
@@ -110,13 +107,11 @@ export default React.memo(function TopBar({
   }
 
   function logoutUser() {
-    disconnect();
     logout();
   };
 
   useEffect(() => {
     setFullName(user.fullName);
-    connect(user.idTaiKhoan);
 
     setUserId(user.idTaiKhoan);
     getViewCount(user.idTaiKhoan);
@@ -125,7 +120,6 @@ export default React.memo(function TopBar({
     return () => {
       setOpen(false);
       setIsNotificationOpen(false);
-      resetMessage();
     };
 
   }, [user]);
@@ -136,172 +130,6 @@ export default React.memo(function TopBar({
 
   // }, [clickScreen]);
 
-  useEffect(() => {
-    let msg = getContact();
-    if (msg != null) {
-      if (msg.type === WebsocketEnum.contact) {
-        getViewCount(msg.receiverId ?? 0);
-      }
-    }
-  }, [getContact()]);
-
-  useEffect(() => {
-    let msg = getMessage();
-    if (msg != null) {
-
-      if (msg.message && msg?.type === WebsocketEnum.chat) {
-
-        setViewCount(s => s + 1);
-        setViewNotity(s => s + 1);
-        let chatUserData = JSON.parse(msg.message);
-
-        if (chatUserData.senderId && chatUserData.senderId != 0) {
-          onActiveUserId(chatUserData.senderId);
-        }
-      }
-      else if (msg?.type === WebsocketEnum.notify) {
-        setViewNotity(s => s + 1);
-      }
-    }
-  }, [getMessage()]);
-
-  const handleNotificationViewCount = async (data: UserNotificationModel) => {
-
-    switch (data.notificationType) {
-      case NotificationTypeEnum.all:
-        // updateIsReadOfNotificationTypeAll(data);
-        updateIsReadOfNotification(data);
-        break;
-      case NotificationTypeEnum.group:
-        if (!data.isRead && data.notificationType) {
-          updateIsReadOfNotification(data);
-        }
-
-        if (data.keyRouter && data.paramater && data.keyRouter.toLowerCase() === 'ticket') {
-          router.push('/admin/ticket?' + data.paramater);
-        }
-
-        break;
-      case NotificationTypeEnum.friend_request:
-        if (!data.isRead && data.notificationType) {
-          updateIsReadOfNotification(data);
-        }
-        break;
-      case NotificationTypeEnum.message:
-        if (!data.isRead && data.notificationType) {
-          updateIsReadOfNotification(data);
-        }
-        else {
-          let dataChatUser = await getChatUserAtId(data.id);
-          onActiveUserId(dataChatUser.senderId, data.id);
-        }
-
-        break;
-      case NotificationTypeEnum.tag:
-        if (!data.isRead && data.notificationType) {
-          updateIsReadOfNotification(data);
-        }
-        break;
-      case NotificationTypeEnum.like:
-        if (!data.isRead && data.notificationType) {
-          updateIsReadOfNotification(data);
-        }
-        break;
-      case NotificationTypeEnum.comment:
-        if (!data.isRead && data.notificationType) {
-          updateIsReadOfNotification(data);
-        }
-        break;
-      case NotificationTypeEnum.password:
-        if (!data.isRead && data.notificationType) {
-          updateIsReadOfNotification(data);
-        }
-
-        router.push('/admin/users?' + data.paramater);
-
-        break;
-
-      default:
-    }
-  };
-
-  async function updateIsReadOfNotification(data: UserNotificationModel) {
-    try {
-      var isUpdate = await notificationServices.updateIsReadOfNotification(data.id);
-
-      if (isUpdate) {
-        let dataChatUser = await getChatUserAtId(data.id);
-
-        if (dataChatUser && dataChatUser.senderId != null) {
-          if (dataChatUser.isRead) {
-            viewNotity === 0 ? setViewNotity(0) : setViewNotity(s => s - 1);
-          }
-        };
-
-        if (data.notificationType === NotificationTypeEnum.message) {
-          onActiveUserId(dataChatUser.senderId, data.id);
-        }
-      }
-
-    } catch (err: any) {
-
-    }
-  }
-
-  // async function updateIsReadOfNotificationTypeAll(data: UserNotificationModel) {
-  //   try {
-  //     var isUpdate = await notificationServices.updateIsReadOfNotificationTypeAll(data.id);
-
-  //     if (isUpdate) {
-  //       setViewNotity(s => s - 1);
-  //     }
-
-  //   } catch (err: any) {
-  //   }
-  // }
-
-  const handleRemovePopup = useCallback((userIdToRemove: number) => {
-    handleRemoveUserPopup(userIdToRemove);
-  }, []);
-
-  // tạo độ cao của popup user-list chat
-  useEffect(() => {
-    const handleResize = () => {
-      const windowHeight = window.innerHeight;
-      const topBarHeight = 0; // Độ cao của top bar
-      const calculatedHeight = windowHeight - topBarHeight - 55; // Trừ đi độ cao của top bar và 55px
-      setDynamicHeight(calculatedHeight);
-    };
-    handleResize(); // Khi component được render lần đầu tiên
-    window.addEventListener("resize", handleResize); // Thêm event listener để lắng nghe sự thay đổi kích thước cửa sổ
-    return () => window.removeEventListener("resize", handleResize); // Cleanup khi component bị unmount
-  }, []);
-
-  const onclickUserOpen = () => {
-    if (!isOpen) {
-      setIsNotificationOpen(false);
-      // Reset open popups state when the user panel is toggled
-      setOpenPopups(popups => popups.map(popup => ({
-        ...popup,
-        chatUserId: null,
-        forceFocus: false
-      })));
-    }
-    setOpen(!isOpen);
-  };
-
-  const onclickNotificationOpen = () => {
-    if (!isNotificationOpen) {
-      setOpen(false);
-      // Reset open popups state when the notification panel is toggled
-      setOpenPopups(popups => popups.map(popup => ({
-        ...popup,
-        chatUserId: null,
-        forceFocus: false
-      })));
-    }
-    setIsNotificationOpen(!isNotificationOpen);
-  };
 
   return (
     <>
@@ -324,7 +152,7 @@ export default React.memo(function TopBar({
           <Popover className="relative">
             <div className="flex flex-1 flex-row mr-5 md:mr-8'">
               <Popover.Button
-                onClick={onclickUserOpen}
+              
                 className="outline-none cursor-pointer text-slate-500 step-2"
               >
                 <BiSolidMessageDetail color="#1c64f2" className="h-6 w-6" />
@@ -347,13 +175,7 @@ export default React.memo(function TopBar({
             >
               <Popover.Panel className="rounded-b-lg absolute w-[25%] z-[80] mt-[12px] origin-bottom-right bg-white shadow-lg"
                 style={{ position: 'fixed', right: '0px', overflow: 'hidden', height: dynamicHeight + "px" }}>
-                <UserList
-                  tabHeight={dynamicHeight}
-                  userLoginId={userId}
-                  onActiveUserId={onActiveUserId}
-                  setIsVisible={setOpen}
-                  isVisible={isOpen}
-                />
+               
               </Popover.Panel>
             </Transition>
           </Popover>
@@ -362,7 +184,7 @@ export default React.memo(function TopBar({
             <div className="flex flex-1 flex-row mr-5 md:mr-8">
               <Popover.Button
                 className="outline-none text-slate-500 cursor-pointer step-3"
-                onClick={onclickNotificationOpen}
+                
               >
                 <FaBell className="h-6 w-6" />
               </Popover.Button>
@@ -372,27 +194,6 @@ export default React.memo(function TopBar({
               </div>
             </div>
 
-            <Transition
-              as={Fragment}
-              show={isNotificationOpen}
-              enter="transition ease-out duration-100"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Popover.Panel className="rounded-b-lg absolute w-[25%] z-[80] mt-[12px] origin-bottom-right bg-white shadow-lg"
-                style={{ position: 'fixed', right: '0px', overflow: 'hidden', height: dynamicHeight + "px" }}>
-                <NotificationList
-                  tabHeight={dynamicHeight}
-                  userLoginId={userId}
-                  setIsVisible={setIsNotificationOpen}
-                  isVisible={isNotificationOpen}
-                  onClickNotification={handleNotificationViewCount}
-                />
-              </Popover.Panel>
-            </Transition>
           </Popover>
 
           <Menu
@@ -513,35 +314,6 @@ export default React.memo(function TopBar({
         <SideBar />
       </Transition>
 
-      {openPopups.map((popup, index) => (
-        <Transition
-          as={Fragment}
-          show={true}
-          enter="transition ease-out duration-300"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="transition ease-in duration-200"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-          key={popup.userId}
-        >
-          <div className={`fixed bottom-0 shadow-lg z-30`}
-            style={{ right: `${index * 320 + (index + 1) * 30}px` }}
-          >
-            <PopupMessage
-              selectUserId={popup.userId}
-              chatUserId={popup.chatUserId}
-              userLoginId={userId}
-              fullName={fullName}
-              onClickClose={() => handleRemovePopup(popup.userId)}
-              isVisible={true}
-              openPopups={openPopups}
-              setOpenPopups={setOpenPopups}
-              forceFocus={popup.forceFocus}
-            />
-          </div>
-        </Transition>
-      ))}
     </>
   );
 });
