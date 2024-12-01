@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ApiUrl } from "../../../../public/app-setting";
+import { ApiHostUrl, ApiUrl } from "../../../../public/app-setting";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 export async function POST(
@@ -10,7 +10,7 @@ export async function POST(
   try {
 
     // Sử dụng axios hoặc thư viện HTTP khác để gửi CLIENT_ID và CLIENT_SECRET đến API
-    const response = await axios.post("https://localhost:44350/api/token/auth", {
+    const response = await axios.post(ApiHostUrl + "/api/token/auth", {
       grant_type,
       username,
       password,
