@@ -10,7 +10,7 @@ export async function POST(
   try {
 
     // Sử dụng axios hoặc thư viện HTTP khác để gửi CLIENT_ID và CLIENT_SECRET đến API
-    const response = await axios.post("http://localhost:6600/identity/api/token/auth", {
+    const response = await axios.post("https://localhost:44350/api/token/auth", {
       grant_type,
       username,
       password,

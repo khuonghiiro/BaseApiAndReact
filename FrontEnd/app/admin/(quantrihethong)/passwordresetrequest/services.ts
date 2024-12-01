@@ -47,7 +47,7 @@ class services extends BaseService {
 	};
 
 	updateStatus = async (id: number, status: number) => {
-		const res: any = await api.put(`identity/api/passwordresetrequest/update/${id}/${status}`);
+		const res: any = await api.put(`api/passwordresetrequest/update/${id}/${status}`);
 		return res;
 	  };
 
@@ -56,5 +56,5 @@ class services extends BaseService {
 		return res;
 	  };
 }
-const passwordResetRequestServices = new services("identity/api/passwordresetrequest");
+const passwordResetRequestServices = new services("api/passwordresetrequest");
 export { passwordResetRequestServices };

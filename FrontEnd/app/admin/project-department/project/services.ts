@@ -46,8 +46,8 @@ class services extends BaseService {
 
   GetAllUsers = (groupCode: string) => {
     const { data, isLoading } = useSWR<any>(
-      "identity/api/users/userselect/" + groupCode,
-      () => api.get("identity/api/users/userselect?groupCode=" + groupCode)
+      "api/users/userselect/" + groupCode,
+      () => api.get("api/users/userselect?groupCode=" + groupCode)
     );
     return {
       data: data?.map((item: any) => {
@@ -61,8 +61,8 @@ class services extends BaseService {
   };
   GetAllUsersCustomer = (groupCode: string, date: Date) => {
     const { data, isLoading } = useSWR<any>(
-      "identity/api/users/userselect/" + groupCode + date.toString(),
-      () => api.get("identity/api/users/userselect?groupCode=" + groupCode)
+      "api/users/userselect/" + groupCode + date.toString(),
+      () => api.get("api/users/userselect?groupCode=" + groupCode)
     );
     return {
       data: data?.map((item: any) => {
@@ -76,7 +76,7 @@ class services extends BaseService {
   };
 
   createCustomer = async (data: any) => {
-    const res: any = await api.post("identity/api/users", data);
+    const res: any = await api.post("api/users", data);
     return res;
   };
 }

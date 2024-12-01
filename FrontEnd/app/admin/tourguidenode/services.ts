@@ -37,7 +37,7 @@ class services extends BaseService {
   };
 
   deleteEdge = async (id: any) => {
-    const res = await api.post(`identity/api/tourguidenode/del-egde/${id}`);
+    const res = await api.post(`api/tourguidenode/del-egde/${id}`);
     return res;
   }
 
@@ -60,5 +60,5 @@ class services extends BaseService {
     return res;
   };
 }
-const tourGuideNodeServices = new services("identity/api/tourguidenode");
+const tourGuideNodeServices = new services("api/tourguidenode");
 export { tourGuideNodeServices };

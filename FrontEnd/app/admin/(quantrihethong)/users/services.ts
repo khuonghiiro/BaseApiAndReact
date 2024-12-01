@@ -13,7 +13,7 @@ class services extends BaseService {
     };
   };
   GetAllGroups = () => {
-    const { data, isLoading } = useSWR('identity/api/groups', () => api.get('identity/api/groups'));
+    const { data, isLoading } = useSWR('api/groups', () => api.get('api/groups'));
     return {
       data: data?.data.map((item: any) => {
         return {
@@ -26,7 +26,7 @@ class services extends BaseService {
   };
 
   GetAllGroupsSelectValueCode = () => {
-    const { data, isLoading } = useSWR('identity/api/groups', () => api.get('identity/api/groups'));
+    const { data, isLoading } = useSWR('api/groups', () => api.get('api/groups'));
     return {
       data: data?.data.map((item: any) => {
         return {
@@ -40,7 +40,7 @@ class services extends BaseService {
 
   async getListUsers(excludeId: number, page: number, limit: number = 10) {
     try {
-      const response = await api.get(`identity/api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false&ItemsPerPage=20`);
+      const response = await api.get(`api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false&ItemsPerPage=20`);
       const users = response.data.map((item: any) => ({
         idTaiKhoan: item.id,
         fullName: item.fullName,
@@ -53,8 +53,8 @@ class services extends BaseService {
   };
 
   GetAllUsers = (excludeId: number, page: number, limit: number = 10) => {
-    const { data, error, isLoading } = useSWR(`identity/api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false`, () =>
-      api.get(`identity/api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false`)
+    const { data, error, isLoading } = useSWR(`api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false`, () =>
+      api.get(`api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false`)
     );
   
     // Kiểm tra lỗi trước để xử lý trường hợp API trả về lỗi
@@ -83,7 +83,7 @@ class services extends BaseService {
     };
   };
   GetTreeMenu = () => {
-    const { data, error, isLoading, mutate } = useSWR<any>('identity/api/menumanager/treemenu', () => api.get('identity/api/menumanager/treemenu'), { revalidateOnFocus: false });
+    const { data, error, isLoading, mutate } = useSWR<any>('api/menumanager/treemenu', () => api.get('api/menumanager/treemenu'), { revalidateOnFocus: false });
     return {
       data,
       error,
@@ -92,20 +92,20 @@ class services extends BaseService {
     };
   };
   ActiveUser = async (id: string) => {
-    const res = await api.put(`identity/api/users/active/${id}`);
+    const res = await api.put(`api/users/active/${id}`);
     return res;
   };
 
   DeactiveUser = async (id: string) => {
-    const res = await api.put(`identity/api/users/deactive/${id}`);
+    const res = await api.put(`api/users/deactive/${id}`);
     return res;
   };
   ResetPassword = async (data: any) => {
-    const res = await api.put('identity/api/users/resetpass', data);
+    const res = await api.put('api/users/resetpass', data);
     return res;
   };
   ChangePassword = async (data: any) => {
-    const res = await api.put('identity/api/users/password', data);
+    const res = await api.put('api/users/password', data);
     return res;
   };
 
@@ -146,7 +146,7 @@ class services extends BaseService {
 
   checkTrung = async (email: any, id: any) => {
     id = id ? id : 0;
-    return api.get('identity/api/users?page=1&itemsPerPage=1&sortDesc=false&Email=' + email + "&neqId=" + id);
+    return api.get('api/users?page=1&itemsPerPage=1&sortDesc=false&Email=' + email + "&neqId=" + id);
   }
 
   getManyCus = async (meta: any) => {
@@ -173,7 +173,7 @@ class services extends BaseService {
   };
 
 }
-const userServices = new services("identity/api/users");
+const userServices = new services("api/users");
 
 export { userServices };
 

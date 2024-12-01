@@ -10,7 +10,7 @@ export async function POST(
     try {
         debugger;
         // Sử dụng axios hoặc thư viện HTTP khác để gửi CLIENT_ID và CLIENT_SECRET đến API
-        const response = await axios.post(ApiUrl + "identity/", {
+        const response = await axios.post(ApiUrl + "", {
             grant_type,
             refresh_token,
             client_id: process.env.CLIENT_ID!,

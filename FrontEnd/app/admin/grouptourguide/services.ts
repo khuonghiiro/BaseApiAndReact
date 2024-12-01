@@ -14,7 +14,7 @@ class services extends BaseService {
   };
 
   GetListSteps = async (meta: Meta) => {
-    const res: any = api.get('identity/api/grouptourguide/steps', { params: meta });
+    const res: any = api.get('api/grouptourguide/steps', { params: meta });
     return res;
   };
 
@@ -28,5 +28,5 @@ class services extends BaseService {
     };
   }; 
 }
-const groupTourGuideServices = new services("identity/api/grouptourguide");
+const groupTourGuideServices = new services("api/grouptourguide");
 export { groupTourGuideServices };

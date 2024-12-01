@@ -71,8 +71,8 @@ class services extends BaseService {
 
   GetAllUsers = () => {
     const { data, isLoading } = useSWR<any>(
-      "identity/api/users/userselect",
-      () => api.get("identity/api/users/userselect")
+      "api/users/userselect",
+      () => api.get("api/users/userselect")
     );
     return {
       data: data?.map((item: any) => {

@@ -10,6 +10,7 @@ import { duLieuCrawlServices } from "../services";
 import { formReducer, INITIAL_STATE_FORM, computedTitle } from "@/lib/common";
 import { MdClose, MdDelete } from "react-icons/md";
 import React from "react";
+import { JsonView, allExpanded, darkStyles, defaultStyles } from 'react-json-view-lite';
 
 export default function DuLieuCrawlForm({
   show,
@@ -17,7 +18,12 @@ export default function DuLieuCrawlForm({
   id,
   onClose,
 }: IFormProps) {
-  const ReactJson = React.lazy(() => import('react-json-view'));
+  // Khai báo rõ ràng kiểu trả về của `React.lazy`
+  const ReactJson = React.lazy(() =>
+    import("react-json-view-lite").then((module) => ({
+      default: module.JsonView,
+    }))
+  );
   const defaultMenu = {
     bangCauHinhId: "",
     data: "",
@@ -115,7 +121,7 @@ export default function DuLieuCrawlForm({
                 {
                   state?.viewMode && <div className="col-span-12">
                     Dữ liệu<br />
-                    {content && <ReactJson src={content} />}
+                    {content && <JsonView data={content} shouldExpandNode={allExpanded} style={defaultStyles} />}
                   </div>
                 }
               </Modal.Body>

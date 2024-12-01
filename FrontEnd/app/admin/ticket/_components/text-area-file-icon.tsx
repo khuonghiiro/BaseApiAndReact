@@ -386,7 +386,7 @@ export const TextAreaFileIcon = ({
                     />
                     {isAvatar ? (action == "read" && field.value && field.value.length > 0) ? <img
                         title={field.value[0].title}
-                        src={field.value[0].id ? `${ApiUrl}identity/${field.value[0].url}` : field.value[0].preview}
+                        src={field.value[0].id ? `${ApiUrl}${field.value[0].url}` : field.value[0].preview}
                         alt={field.value[0].title}
                         style={{ minHeight: 140 }}
                     /> : '' : <>
@@ -454,7 +454,7 @@ export const TextAreaFileIcon = ({
                                                                                                         {file.id ? (
                                                                                                             <Image
                                                                                                                 title={file.title}
-                                                                                                                src={`${ApiUrl}identity/${file.url}`}
+                                                                                                                src={`${ApiUrl}${file.url}`}
                                                                                                                 alt={file.title}
                                                                                                                 height={20}
                                                                                                                 width={20}
@@ -558,7 +558,7 @@ export const TextAreaFileIcon = ({
                                                             <div className="flex justify-center align-center">
                                                                 <Image
                                                                     title={""}
-                                                                    src={`${ApiUrl}identity/${file.url}`}
+                                                                    src={`${ApiUrl}${file.url}`}
                                                                     alt="Không có hiển thị"
                                                                     width={500}
                                                                     height={500}
@@ -590,7 +590,7 @@ export const TextAreaFileIcon = ({
                     isAvatar ? <>
                         {(field.value && field.value.length > 0) ? <label htmlFor={nameAttach + "file-input"}><img
                             title={field.value[0].title}
-                            src={field.value[0].id ? `${ApiUrl}identity/${field.value[0].url}` : field.value[0].preview}
+                            src={field.value[0].id ? `${ApiUrl}${field.value[0].url}` : field.value[0].preview}
                             alt={field.value[0].title}
                             style={{ minHeight: 140 }}
                         /> </label> :
@@ -658,7 +658,7 @@ export const ViewAvatar = ({ data, width, height }: { data: string; width?: numb
 
     return <div>
         {
-            jsonData.length > 0 && <img src={ApiUrl + "identity/" + jsonData[0].url} alt={jsonData[0].title} style={{ width: width ?? '120px', height: height ?? '120px' }} />
+            jsonData.length > 0 && <img src={ApiUrl + "" + jsonData[0].url} alt={jsonData[0].title} style={{ width: width ?? '120px', height: height ?? '120px' }} />
         }
     </div>;
 

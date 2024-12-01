@@ -1,8 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "react-toastify/dist/ReactToastify.css";
-@import "../utils/style-custom.css";
+/* @import "react-toastify/dist/ReactToastify.css"; */
+/* @import "../utils/style-custom.css"; */
 
 :root {
   --max-width: 1100px;

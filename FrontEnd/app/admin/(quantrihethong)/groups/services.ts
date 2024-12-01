@@ -39,7 +39,7 @@ class services extends BaseService {
       FilterText: title,
       ...filter,
     };
-    const { data, error, isLoading, mutate } = useSWR(['identity/api/roles/listper', meta], () => api.get('identity/api/roles/listper', { params: params }));
+    const { data, error, isLoading, mutate } = useSWR(['api/roles/listper', meta], () => api.get('api/roles/listper', { params: params }));
     return {
       data,
       error,
@@ -50,12 +50,12 @@ class services extends BaseService {
   };
 
   updateGRP = async (data: any) => {
-    const res: any = await api.put('identity/api/roles/updategrp', data);
+    const res: any = await api.put('api/roles/updategrp', data);
     return res;
   };
 
   GetTreeCategory = (id: number) => {
-    const { data, isLoading } = useSWR(id ? `${'identity/api/rolecategory/tree'}${id}` : null, () => api.get('identity/api/rolecategory/tree'));
+    const { data, isLoading } = useSWR(id ? `${'api/rolecategory/tree'}${id}` : null, () => api.get('api/rolecategory/tree'));
     if (data) {
       return {
         data: data,
@@ -70,7 +70,7 @@ class services extends BaseService {
     }
   };
   GetPer = (groupid: number, roleid:number) => {
-    const { data, isLoading } = useSWR((groupid&&roleid) ? `identity/api/grouprolepermission/getper/${groupid}/${roleid}` : null, () => api.get(`identity/api/grouprolepermission/getper/${groupid}/${roleid}`));
+    const { data, isLoading } = useSWR((groupid&&roleid) ? `api/grouprolepermission/getper/${groupid}/${roleid}` : null, () => api.get(`api/grouprolepermission/getper/${groupid}/${roleid}`));
     return {
       data: data,
       isLoading,
@@ -79,5 +79,5 @@ class services extends BaseService {
 
 
 }
-const groupsServices = new services("identity/api/groups");
+const groupsServices = new services("api/groups");
 export { groupsServices };

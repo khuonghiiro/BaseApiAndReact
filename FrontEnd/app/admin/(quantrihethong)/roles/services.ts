@@ -28,8 +28,8 @@ class services extends BaseService {
   };
 
   GetDanhMuc = () => {
-    const { data, isLoading } = useSWR("identity/api/rolecategory/tree", () =>
-      api.get("identity/api/rolecategory/tree")
+    const { data, isLoading } = useSWR("api/rolecategory/tree", () =>
+      api.get("api/rolecategory/tree")
     );
     if (data) {
       let arr = data;
@@ -62,5 +62,5 @@ class services extends BaseService {
     }
   }
 }
-const rolesServices = new services("identity/api/roles");
+const rolesServices = new services("api/roles");
 export { rolesServices };

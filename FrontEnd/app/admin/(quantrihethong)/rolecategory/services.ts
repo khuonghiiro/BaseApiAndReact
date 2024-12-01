@@ -27,8 +27,8 @@ class services extends BaseService {
     };
   };
   GetParent = () => {
-    const { data, isLoading } = useSWR("identity/api/rolecategory", () =>
-      api.get("identity/api/rolecategory")
+    const { data, isLoading } = useSWR("api/rolecategory", () =>
+      api.get("api/rolecategory")
     );
     return {
       data: data?.data.map((item: any) => {
@@ -41,5 +41,5 @@ class services extends BaseService {
     };
   };
 }
-const roleCategoryServices = new services("identity/api/rolecategory");
+const roleCategoryServices = new services("api/rolecategory");
 export { roleCategoryServices };

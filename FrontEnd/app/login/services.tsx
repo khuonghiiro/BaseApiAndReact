@@ -23,5 +23,5 @@ class services extends BaseService {
     };
 }
 
-const loginServices = new services("identity/api/token");
+const loginServices = new services("api/token");
 export { loginServices };

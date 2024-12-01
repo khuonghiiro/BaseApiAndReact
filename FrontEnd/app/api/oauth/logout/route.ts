@@ -7,7 +7,7 @@ export async function POST() {
     var oauth = cookies().get("oauth");
     if (oauth) {
       var obj = JSON.parse(oauth.value);
-      const response = await axios.post(ApiUrl + "identity/api/token/auth", {
+      const response = await axios.post(ApiUrl + "api/token/auth", {
         grant_type: "invalidate_token",
         refresh_token: obj.refresh_token,
         client_id: process.env.CLIENT_ID!,

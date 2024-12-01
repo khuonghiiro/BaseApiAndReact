@@ -1,14 +1,10 @@
 "use client";
 import "./styles/styles.css";
 import { useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
 import { SWRConfig } from "swr";
-import { WebSocketProvider } from "./(quantrihethong)/websocket/services";
 
 import dynamic from "next/dynamic";
 import { AuthProvider } from "@/shared/Context/appAdminContext";
-import { PopupMsgProvider } from "./(quantrihethong)/chatuser/_components/popup-msg-provider";
-import { TourProvider } from "@/lib/tour-context";
 const TopBar = dynamic(() => import("../components/admin/layout/top-bar"));
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -37,8 +33,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <AuthProvider>
-        <TourProvider>
-          <WebSocketProvider>
+        {/* <TourProvider>
+          <WebSocketProvider> */}
             <SWRConfig
               value={{
                 revalidateOnFocus: false,
@@ -50,7 +46,24 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 },
               }}
             >
-              <PopupMsgProvider>
+              <main
+                  className={`bg-[#f4f6f9] min-h-screen pt-12 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-56" : ""
+                    }`}
+                >
+                  <div className="mx-1 md:mx-3">{children}</div>
+                  {/* <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  /> */}
+                </main>
+              {/* <PopupMsgProvider>
                 <TopBar showNav={showNav} setShowNav={setShowNav} />
                 <main
                   className={`bg-[#f4f6f9] min-h-screen pt-12 transition-all duration-[400ms] ${showNav && !isMobile ? "pl-56" : ""
@@ -69,10 +82,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     pauseOnHover
                   />
                 </main>
-              </PopupMsgProvider>
+              </PopupMsgProvider> */}
             </SWRConfig>
-          </ WebSocketProvider>
-        </TourProvider>
+          {/* </ WebSocketProvider>
+        </TourProvider> */}
       </AuthProvider>
     </>
   );

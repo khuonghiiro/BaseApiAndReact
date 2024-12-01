@@ -22,7 +22,7 @@ class services extends BaseService {
     };
   };
   GetMenuCha = () => {
-    const { data } = useSWR<any>('identity/api/menumanager/selectmenu', () => api.get('identity/api/menumanager/selectmenu'));
+    const { data } = useSWR<any>('api/menumanager/selectmenu', () => api.get('api/menumanager/selectmenu'));
    
     return {
       data: data?data?.data?.map((item: any) => {
@@ -34,7 +34,7 @@ class services extends BaseService {
     };
   };
   GetAllGroups = () => {
-    const { data, isLoading } = useSWR('identity/api/groups', () => api.get('identity/api/groups'));
+    const { data, isLoading } = useSWR('api/groups', () => api.get('api/groups'));
     return {
       data: data?.data.map((item: any) => {
         return {
@@ -46,7 +46,7 @@ class services extends BaseService {
     };
   };
 }
-const menuManagerServices = new services("identity/api/menumanager");
+const menuManagerServices = new services("api/menumanager");
 
 export { menuManagerServices };
 

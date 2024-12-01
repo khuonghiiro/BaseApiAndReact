@@ -98,8 +98,8 @@ class services extends BaseService {
     }
 
     const { data, isLoading } = useSWR<any>(
-      "identity/api/users/userselect",
-      () => api.get(`identity/api/users/userselect?strIds=${strIds}`)
+      "api/users/userselect",
+      () => api.get(`api/users/userselect?strIds=${strIds}`)
     );
     return {
       data: data?.map((item: any) => {
@@ -182,7 +182,7 @@ class services extends BaseService {
   };
 
   GetAllUserInDepartments = async (strIds?: string | null) => {
-    const url = `identity/api/users/userselect?strIds=${strIds}`;
+    const url = `api/users/userselect?strIds=${strIds}`;
     const res: any = await api.get(url);
 
     return {
@@ -236,7 +236,7 @@ class services extends BaseService {
       return "/pdf.png";
     }
 
-    return `${ApiUrl}identity/${url}`;
+    return `${ApiUrl}${url}`;
   }
 
 }
