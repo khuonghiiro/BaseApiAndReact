@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EPS.Identity.Data.Entities;
+using EPS.Identity.Dtos.GroupUser;
 using EPS.Identity.Dtos.UserInfo;
 
 namespace EPS.Identity.Profiles
@@ -17,7 +18,7 @@ namespace EPS.Identity.Profiles
     {
         public UserInfoEntityToDto()
         {
-            CreateMap<UserDetail, UserInfoDetailDto>(); ;
+            CreateMap<UserDetail, UserInfoDetailDto>(); 
 
         }
     }

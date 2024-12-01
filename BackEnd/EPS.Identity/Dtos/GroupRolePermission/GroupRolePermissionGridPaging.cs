@@ -1,4 +1,4 @@
-﻿using EPS.Libary.Utils;
+﻿using EPS.Identity.Pages;
 using System.Linq.Expressions;
 
 namespace EPS.Identity.Dtos.GroupRolePermission
@@ -25,10 +25,10 @@ namespace EPS.Identity.Dtos.GroupRolePermission
             {
                 predicates.Add(x => x.PermissionId.Equals(PermissionId));
             }
-            if(!string.IsNullOrEmpty(PermissionCode))
+            if (!string.IsNullOrEmpty(PermissionCode))
             {
                 predicates.Add(x => x.PermissionCode.Equals(PermissionCode));
-            }    
+            }
             return predicates;
         }
     }

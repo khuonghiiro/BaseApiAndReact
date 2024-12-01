@@ -1,34 +1,32 @@
 ﻿using AutoMapper;
+using EPS.Identity.BaseExt;
 using EPS.Identity.Data.Entities;
 using EPS.Identity.Dtos.Role;
 using EPS.Identity.Dtos.User;
-using EPS.Libary.Identity;
-using EPS.Libary.Utils.Repository;
-using EPS.Libary.Utils;
+using EPS.Identity.Pages;
+using EPS.Identity.Repositories.Interface;
 using Microsoft.AspNetCore.Identity;
-using System.Reflection.PortableExecutable;
-using EPS.Libary.Extensions;
 
 namespace EPS.Identity.Services
 {
     public class AuthorizationService
     {
-        private EPSService _baseService;
-        private EPSRepository _repository;
+        private CommonService _baseService;
+        private ICommonRepository _repository;
         private IMapper _mapper;
         private UserManager<User> _userManager;
         private ILogger<AuthorizationService> _logger;
         private IUserIdentity<int> _userIdentity;
         private IConfiguration _configuration;
 
-        public AuthorizationService(EPSRepository repository, IMapper mapper, UserManager<User> userManager, ILogger<AuthorizationService> logger, IUserIdentity<int> userIdentity, IConfiguration configuration)
+        public AuthorizationService(ICommonRepository repository, IMapper mapper, UserManager<User> userManager, ILogger<AuthorizationService> logger, IUserIdentity<int> userIdentity, IConfiguration configuration)
         {
             _repository = repository;
             _mapper = mapper;
             _userManager = userManager;
             _logger = logger;
             _userIdentity = userIdentity;
-            _baseService = new EPSService(repository, mapper);
+            _baseService = new CommonService(repository, mapper);
             _configuration = configuration;
         }
 
@@ -43,7 +41,7 @@ namespace EPS.Identity.Services
         //{
         //    using (var ts = _repository.BeginTransaction())
         //    {
-        //        var db = _repository.GetDbContext<EPSContext>();
+        //        var db = _repository.GetDbContext<CommonContext>();
         //        var userPrivileges = await db.UserPrivileges.Include(x => x.Privilege).Where(x => x.UserId == userId).ToListAsync();
 
         //        foreach (var removingPrivilges in userPrivileges.Where(x => !privileges.Contains(x.PrivilegeId)))
@@ -138,13 +136,15 @@ namespace EPS.Identity.Services
                 {
                     var errors = string.Join(".", result.Errors.Select(x => x.Description));
 
-                    throw new EPSException(errors);
+                    throw new CommonException(errors);
                 }
                 else
                 {
                     //await SaveUserRoles(entityUser.Id, newUser.RoleIds);
                     // Must log manually if not using BaseService
-                    _logger.Log(Microsoft.Extensions.Logging.LogLevel.Information, default(EventId), new ExtraPropertyLogger("User {username} added new {entity} {identifier}", _userIdentity.Username, typeof(User).Name, entityUser.ToString()).AddProp("data", entityUser), null, ExtraPropertyLogger.Formatter);
+
+
+                   // _logger.Log(Microsoft.Extensions.Logging.LogLevel.Information, default(EventId), new ExtraPropertyLogger("User {username} added new {entity} {identifier}", _userIdentity.Username, typeof(User).Name, entityUser.ToString()).AddProp("data", entityUser), null, ExtraPropertyLogger.Formatter);
                 }
 
                 ts.Commit();
@@ -201,14 +201,14 @@ namespace EPS.Identity.Services
                 //await SaveUserRoles(id, editedUser.RoleIds);
                 //if (!string.IsNullOrEmpty(editedUser.NewPassword))
                 //{
-                //    var user = await _baseService.GetDbContext<EPSContext>().Users.FindAsync(id);
+                //    var user = await _baseService.GetDbContext<CommonContext>().Users.FindAsync(id);
                 //    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
                 //    var result = await _userManager.ResetPasswordAsync(user, token, editedUser.NewPassword);
 
                 //    if (!result.Succeeded)
                 //    {
-                //        throw new EPSException(string.Join(".", result.Errors.Select(x => x.Description)));
+                //        throw new CommonException(string.Join(".", result.Errors.Select(x => x.Description)));
                 //    }
                 //    else
                 //    {

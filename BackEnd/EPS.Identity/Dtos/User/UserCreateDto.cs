@@ -15,6 +15,11 @@
         public string Address { get; set; }       
         public string Avatar { get; set; }       
         public int Sex { get; set; }
+
+        /// <summary>
+        /// Thời gian login cuối cùng tài khoản
+        /// </summary>
+        public DateTime? LastLoginDate { get; set; }
     }
     public class UserAddDto
     {

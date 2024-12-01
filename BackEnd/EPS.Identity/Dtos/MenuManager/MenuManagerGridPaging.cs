@@ -1,12 +1,6 @@
-﻿using EPS.Data.Entities;
-using EPS.Identity.Dtos.MenuManager;
-using EPS.Libary.Utils;
+﻿using EPS.Identity.Pages;
 using JetBrains.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace EPS.Identity.Dtos.MenuManager
 {
@@ -14,7 +8,7 @@ namespace EPS.Identity.Dtos.MenuManager
     {
         [CanBeNull] public string? FilterText { get; set; }
         public bool IsAllShow { get; set; }
-        public int ParentId { get; set; }        
+        public int ParentId { get; set; }
 
         public override List<Expression<Func<MenuManagerGridDto, bool>>> GetPredicates()
         {
@@ -32,7 +26,7 @@ namespace EPS.Identity.Dtos.MenuManager
             {
                 predicates.Add(x => x.IsShow.Equals(true));
             }
-            
+
             return predicates;
         }
     }

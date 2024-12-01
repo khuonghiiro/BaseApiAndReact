@@ -18,8 +18,8 @@ namespace EPS.Identity.Profiles
         public GroupUserEntityToDto()
         {
             CreateMap<GroupUser, GroupUserCreateDto>();
-            CreateMap<GroupUser, GroupUserDetailDto>(); ;
-            CreateMap<GroupUser, GroupUserGridDto>(); ;
+            CreateMap<GroupUser, GroupUserDetailDto>();
+            CreateMap<GroupUser, GroupUserGridDto>();
 
         }
     }

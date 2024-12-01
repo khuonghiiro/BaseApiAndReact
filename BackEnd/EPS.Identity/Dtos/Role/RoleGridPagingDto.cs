@@ -1,4 +1,4 @@
-﻿using EPS.Libary.Utils;
+﻿using EPS.Identity.Pages;
 using System.Linq.Expressions;
 
 namespace EPS.Identity.Dtos.Role
@@ -12,10 +12,10 @@ namespace EPS.Identity.Dtos.Role
 
             if (!string.IsNullOrEmpty(FilterText))
             {
-                predicates.Add(x => x.Name.Contains(FilterText.Trim())|| x.Description.Contains(FilterText.Trim()));
+                predicates.Add(x => x.Name.Contains(FilterText.Trim()) || x.Description.Contains(FilterText.Trim()));
             }
             return predicates;
         }
     }
-    
+
 }

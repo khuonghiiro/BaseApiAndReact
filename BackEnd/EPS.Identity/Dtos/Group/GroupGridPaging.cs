@@ -1,4 +1,4 @@
-﻿using EPS.Libary.Utils;
+﻿using EPS.Identity.Pages;
 using JetBrains.Annotations;
 using System.Linq.Expressions;
 
@@ -14,8 +14,8 @@ namespace EPS.Identity.Dtos.Group
 
             if (!string.IsNullOrEmpty(FilterText))
             {
-                predicates.Add(x => x.Title.Contains(FilterText)|| x.Code.Contains(FilterText));
-            }            
+                predicates.Add(x => x.Title.Contains(FilterText) || x.Code.Contains(FilterText));
+            }
             return predicates;
         }
     }

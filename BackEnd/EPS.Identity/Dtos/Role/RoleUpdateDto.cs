@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EPS.Identity.Dtos.Role
+﻿namespace EPS.Identity.Dtos.Role
 {
     public class RoleUpdateDto
     {

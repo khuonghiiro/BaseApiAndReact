@@ -1,8 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
+﻿using System.Dynamic;
 
 namespace EPS.Identity.Dtos.MenuManager
 {
@@ -15,15 +11,20 @@ namespace EPS.Identity.Dtos.MenuManager
         public string Icon { get; set; }
         public int? ParentId { get; set; }
         public string Parent { get; set; }
-        public Object ParentJson { get {
-                dynamic obj = new ExpandoObject();                
+        public Object ParentJson
+        {
+            get
+            {
+                dynamic obj = new ExpandoObject();
                 obj.label = Parent;
                 obj.value = ParentId;
                 return obj;
-            } }
+            }
+        }
         public bool IsShow { get; set; }
         public string Groups { get; set; }//Lưu id group
         public IEnumerable<MenuManagerGridDto> Childrens { get; set; }
+        public IEnumerable<MenuManagerGridDto> Children { get; set; }
         public MenuManagerGridDto()
         {
 

@@ -1,11 +1,12 @@
-﻿using EPS.Identity.Data.Entities;
+using EPS.Identity.Authorize;
+using EPS.Identity.Data.Entities;
 using EPS.Identity.Data.Helpers;
-using Microsoft.EntityFrameworkCore;
-using EPS.Libary.Extensions;
 using EPS.Identity.Dtos;
 using EPS.Identity.Services;
-using NLog.Web;
+using Microsoft.EntityFrameworkCore;
 using NLog;
+using NLog.Web;
+using System;
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 try
@@ -15,27 +16,32 @@ try
     // Add services to the container.
 
     builder.Services.AddControllers();
-    builder.Services.AddAutoMapper(typeof(EPSService));
 
     // NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
-    builder.Host.UseNLog();
 
-    builder.Services.AddDbContext<EPSContext>(opt =>
-    {
-        opt.UseLazyLoadingProxies().UseSqlServer(configuration.GetConnectionString("EPS"));
-        opt.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-    });
+    //builder.Services.AddDbContext<DataDbContext>(opt =>
+    //{
+    //    opt.UseLazyLoadingProxies().UseSqlServer(configuration.GetConnectionString("EPS"));
+
+    //    opt.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
+    //});
+
+    builder.Services.AddDbContext<DataDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("EPS")));
+
+
+    builder.Services.RegisterDependencyBase(); // đăng ký base service
+    builder.Services.AddCustomScopedServices();
+
     builder.Services.AddIdentityCore<User>(options =>
     {
         options.User.RequireUniqueEmail = false;
-    }).AddEntityFrameworkStores<EPSContext>();
-    builder.Services.AddScoped<EPSRepository>();
+    }).AddEntityFrameworkStores<DataDbContext>();
+
     builder.Services.AddSingleton<EmailService>();
-    builder.Services.RegisterDependencyBase();
-    builder.Services.AddScoped<EPSService>();
     builder.Services.AddScoped<AuthorizationService>();
-   
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
