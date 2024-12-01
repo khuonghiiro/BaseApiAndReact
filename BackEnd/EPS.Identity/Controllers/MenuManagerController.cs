@@ -78,7 +78,7 @@ namespace EPS.API.Controllers
         public async Task<IActionResult> Create(MenuManagerCreateDto MenuManagerCreateDto)
         {
             await _baseService.CreateAsync<MenuManager, MenuManagerCreateDto>(MenuManagerCreateDto);
-            // await AddLogAsync(UserIdentity.FullName + ": thêm " + MenuManagerCreateDto.Title, "MENUMANAGERS", (int)ActionLogs.Add, (int)StatusLogs.Success);
+            // //await AddLogAsync(UserIdentity.FullName + ": thêm " + MenuManagerCreateDto.Title, "MENUMANAGERS", (int)ActionLogs.Add, (int)StatusLogs.Success);
             return Ok();
         }
 
@@ -88,7 +88,7 @@ namespace EPS.API.Controllers
         public async Task<IActionResult> Update(int id, MenuManagerUpdateDto MenuManagerUpdateDto)
         {
             await _baseService.UpdateAsync<MenuManager, MenuManagerUpdateDto>(id, MenuManagerUpdateDto);
-            // await AddLogAsync(UserIdentity.FullName + ": sửa " + MenuManagerUpdateDto.Title, "MENUMANAGERS", (int)ActionLogs.Edit, (int)StatusLogs.Success);
+            // //await AddLogAsync(UserIdentity.FullName + ": sửa " + MenuManagerUpdateDto.Title, "MENUMANAGERS", (int)ActionLogs.Edit, (int)StatusLogs.Success);
             return Ok(true);
         }
 
@@ -97,7 +97,7 @@ namespace EPS.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _baseService.DeleteAsync<MenuManager, int>(id);
-            // await AddLogAsync(UserIdentity.FullName + ": xóa " + id, "MENUMANAGERS", (int)ActionLogs.Delete, (int)StatusLogs.Success);
+            // //await AddLogAsync(UserIdentity.FullName + ": xóa " + id, "MENUMANAGERS", (int)ActionLogs.Delete, (int)StatusLogs.Success);
             return Ok(true);
         }
 
@@ -114,7 +114,7 @@ namespace EPS.API.Controllers
             {
                 var MenuManagerIds = ids.Split(',').Select(x => Convert.ToInt32(x)).ToArray();
                 await _baseService.DeleteAsync<MenuManager, int>(MenuManagerIds);
-                // await AddLogAsync(UserIdentity.FullName + ": xóa danh sách " + ids, "MENUMANAGERS", (int)ActionLogs.Delete, (int)StatusLogs.Success);
+                // //await AddLogAsync(UserIdentity.FullName + ": xóa danh sách " + ids, "MENUMANAGERS", (int)ActionLogs.Delete, (int)StatusLogs.Success);
                 return Ok(true);
             }
             catch (FormatException ex)

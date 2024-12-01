@@ -98,7 +98,6 @@ namespace EPS.Identity.BaseExt
 
             // Trả về danh sách kết quả dưới dạng PagingResult
             result.Data = await query.ToListAsync();
-            result.IsOK = true;
             return result;
         }
 
@@ -341,7 +340,6 @@ namespace EPS.Identity.BaseExt
 
             pagingResult = result;
             pagingResult.Data = await query.ToListAsync();
-            pagingResult.IsOK = true;
             return result;
         }
 

@@ -1,0 +1,88 @@
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fadeInLeft {
+    animation: fadeInLeft 1s ease-out forwards;
+}
+
+.shadow-custom {
+    box-shadow: 5px 5px 0px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Start - Định nghĩa hiệu ứng chuyển động từ trên xuống dưới */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.5s ease-in-out;
+}
+/* End - Định nghĩa hiệu ứng chuyển động từ trên xuống dưới */
+
+/* Start - Định nghĩa hiệu ứng chuyển động từ phải sang trái */
+@keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-in-right {
+    animation: slideInRight 1s ease-out;
+  }
+  /* End - Định nghĩa hiệu ứng chuyển động từ phải sang trái */
+
+  @keyframes textBounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .animated-character {
+    display: inline-block;
+    opacity: 0;
+    animation: textBounce 0.5s forwards, textFadeIn 0.5s forwards;
+  }
+  
+  @keyframes textFadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  

@@ -48,7 +48,7 @@ namespace EPS.Identity.Controllers
         public async Task<IActionResult> Create(GroupCreateDto GroupCreateDto)
         {
             await _baseService.CreateAsync<Group, GroupCreateDto>(GroupCreateDto);
-            //// await AddLogAsync("Thêm mới: " + GroupCreateDto.Title, "Groups", (int)ActionLogs.Add, (int)StatusLogs.Success, GroupCreateDto.Id);
+            //// //await AddLogAsync("Thêm mới: " + GroupCreateDto.Title, "Groups", (int)ActionLogs.Add, (int)StatusLogs.Success, GroupCreateDto.Id);
             return Ok();
         }
 
@@ -58,7 +58,7 @@ namespace EPS.Identity.Controllers
         public async Task<IActionResult> Update(int id, GroupUpdateDto GroupUpdateDto)
         {
             await _baseService.UpdateAsync<Group, GroupUpdateDto>(id, GroupUpdateDto);
-            //// await AddLogAsync("Chỉnh sửa: " + GroupUpdateDto.Title, "Groups", (int)ActionLogs.Edit, (int)StatusLogs.Success, GroupUpdateDto.Id);
+            //// //await AddLogAsync("Chỉnh sửa: " + GroupUpdateDto.Title, "Groups", (int)ActionLogs.Edit, (int)StatusLogs.Success, GroupUpdateDto.Id);
             return Ok(true);
         }
 
@@ -67,7 +67,7 @@ namespace EPS.Identity.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await _baseService.DeleteAsync<Group, int>(id);
-            //// await AddLogAsync("Xóa: " + id, "Groups", (int)ActionLogs.Delete, (int)StatusLogs.Success, id);
+            //// //await AddLogAsync("Xóa: " + id, "Groups", (int)ActionLogs.Delete, (int)StatusLogs.Success, id);
             return Ok(true);
         }
 
@@ -86,7 +86,7 @@ namespace EPS.Identity.Controllers
                 await _baseService.DeleteAsync<Group, int>(GroupIds);
                 foreach (var id in GroupIds)
                 {
-                    //// await AddLogAsync("Xóa: " + id, "Groups", (int)ActionLogs.Delete, (int)StatusLogs.Success, id);
+                    //// //await AddLogAsync("Xóa: " + id, "Groups", (int)ActionLogs.Delete, (int)StatusLogs.Success, id);
                 }
                 return Ok(true);
 

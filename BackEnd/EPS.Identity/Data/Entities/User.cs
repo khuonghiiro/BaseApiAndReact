@@ -33,12 +33,12 @@ namespace EPS.Identity.Data.Entities
         [InverseProperty("User")]
         public virtual ICollection<UserDetail> UserDetails { get; set; }
 
-        //[InverseProperty("PasswordResetRequest_UserId")]
-        //public virtual ICollection<PasswordResetRequest> PasswordResetRequest_UserIds { get; set; }
+        [InverseProperty("PasswordResetRequest_UserId")]
+        public virtual ICollection<PasswordResetRequest> PasswordResetRequest_UserIds { get; set; }
 
 
-        //[InverseProperty("PasswordResetRequest_UserAgreeId")]
-        //public virtual ICollection<PasswordResetRequest> PasswordResetRequest_UserAgreeIds { get; set; }
+        [InverseProperty("PasswordResetRequest_UserAgreeId")]
+        public virtual ICollection<PasswordResetRequest> PasswordResetRequest_UserAgreeIds { get; set; }
 
 
         public void OnDelete()

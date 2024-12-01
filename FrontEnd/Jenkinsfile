@@ -1,0 +1,23 @@
+pipeline {
+  agent any
+  stages {
+    stage('Install dependencies') {
+      steps {
+        echo 'Start Install dependencies'
+        bat 'npm install --force'
+      }
+    }
+    stage('Build') {
+      steps {
+        echo 'Start Build'
+        bat 'npm run build'
+      }
+    }
+    stage('Reset IIS') {
+      steps {
+        echo 'Start Reset IIS'
+        bat 'iisreset'
+      }
+    }
+  }
+}

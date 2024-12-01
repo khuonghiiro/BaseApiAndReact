@@ -33,6 +33,10 @@ namespace EPS.Identity.Data.Entities
         public virtual DbSet<EPS.Identity.Data.Entities.RoleCategory> RoleCategories { get; set; }
         public virtual DbSet<EPS.Identity.Data.Entities.User> Users { get; set; }
         public virtual DbSet<EPS.Identity.Data.Entities.UserDetail> UserDetails { get; set; }
+        public virtual DbSet<EPS.Identity.Data.Entities.PasswordResetRequest> PasswordResetRequests { get; set; }
+        public virtual DbSet<EPS.Identity.Data.Entities.GroupTourGuide> GroupTourGuides { get; set; }
+        public virtual DbSet<EPS.Identity.Data.Entities.TourGuideNode> TourGuideNodes { get; set; }
+
         //{KhongXoaDoanCommentNay}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

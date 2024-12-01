@@ -1,6 +1,7 @@
 ﻿using EPS.Identity.Authorize;
 using EPS.Identity.BaseExt;
 using EPS.Identity.Data.Entities;
+using EPS.Identity.Data.Enums;
 using EPS.Identity.Dtos;
 using EPS.Identity.Dtos.Captcha;
 using Microsoft.AspNetCore.Identity;
@@ -478,12 +479,103 @@ namespace EPS.Identity.Controllers
 
             if (result != null && result.Success)
             {
-                //return await SendNotificationToAdmin(request.UserName);
+                return await SendNotificationToAdmin(request.UserName);
             }
             return BadRequest("Lỗi xác thực captcha.");
 
         }
 
+        private async Task<IActionResult> SendNotificationToAdmin(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user != null)
+            {
+                var userPassword = await _context.PasswordResetRequests.Where(x => x.UserId == user.Id && x.status == (int)PasswordResetRequestEnum.REQUEST && !x.DeletedDate.HasValue).FirstOrDefaultAsync();
+                if (userPassword != null)
+                {
+                    return BadRequest("Đã gửi yêu cầu, xin chờ hệ thống xác thực.");
+                }
+
+                try
+                {
+                    var listUser = await _context.Users.Where(x => x.IsAdministrator == true && x.Status == 2 && !x.DeletedDate.HasValue).ToListAsync();
+
+                    var data = await CreateOrUpdatePassword(user.Id);
+
+                    if (data != null)
+                    {
+                        //_rabbitMQManager.SendNotification(
+                        //    Libary.RabbitManager.Enums.NotificationTypeEnum.PASSWORD,
+                        //    user.Id,
+                        //    "Yêu cầu cấp lại mật khẩu với tài khoản <b>" + userName + "</b>",
+                        //    string.Empty,
+
+                        //    new RabbitParam()
+                        //    {
+                        //        ReceiverIds = listUser.Select(s => s.Id).ToList()
+                        //    },
+                        //    typeof(PasswordResetRequest).Name,
+                        //    $"UserName={user.UserName}&PasswordRequestId={data.Id}"
+                        //);
+
+                        return Ok(true);
+                    }
+                    else
+                    {
+                        return BadRequest("Không thể tạo yêu cầu cấp mật khẩu.");
+                    }
+
+                }
+                catch (FormatException ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+
+            return BadRequest("Không tìm thấy tài khoản trong hệ thống.");
+        }
+
+        private async Task<PasswordResetRequest?> CreateOrUpdatePassword(int userId)
+        {
+            try
+            {
+                var data = await _context.PasswordResetRequests.Where(s => s.UserId == userId && !s.DeletedDate.HasValue).FirstOrDefaultAsync();
+                if (data != null)
+                {
+                    data.status = (int)PasswordResetRequestEnum.REQUEST;
+                    data.CreatedAt = DateTime.Now;
+                    data.UpdatedAt = null;
+
+                    _context.Update(data);
+                    await _context.SaveChangesAsync();
+
+                    return data;
+                }
+                else
+                {
+                    PasswordResetRequest input = new();
+
+                    input.UserId = userId;
+                    input.status = (int)PasswordResetRequestEnum.REQUEST;
+                    input.CreatedUserId = userId;
+                    input.CreatedDate = DateTime.Now;
+                    input.CreatedAt = DateTime.Now;
+
+                    await _context.PasswordResetRequests.AddAsync(input);
+                    await _context.SaveChangesAsync();
+
+                    return input;
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            return null;
+        }
         #endregion
     }
 }

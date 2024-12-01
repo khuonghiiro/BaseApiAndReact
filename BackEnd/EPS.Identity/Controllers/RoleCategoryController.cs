@@ -48,7 +48,7 @@ namespace EPS.API.Controllers
             try
             {
                 await _baseService.CreateAsync<RoleCategory, RoleCategoryCreateDto>(RoleCategoryCreateDto);
-                // await AddLogAsync(UserIdentity.FullName + ": thêm " + RoleCategoryCreateDto.TieuDe, "rolecategory", (int)ActionLogs.Add, (int)StatusLogs.Success, RoleCategoryCreateDto.Id);
+                // //await AddLogAsync(UserIdentity.FullName + ": thêm " + RoleCategoryCreateDto.TieuDe, "rolecategory", (int)ActionLogs.Add, (int)StatusLogs.Success, RoleCategoryCreateDto.Id);
                 return Ok();
             }
             catch (FormatException ex)
@@ -67,7 +67,7 @@ namespace EPS.API.Controllers
                 if (oRoleCategoryDetail is null)
                     return BadRequest("Bản ghi không tồn tại");
                 await _baseService.UpdateAsync<RoleCategory, RoleCategoryUpdateDto>(id, RoleCategoryUpdateDto);
-                // await AddLogAsync(UserIdentity.FullName + ": sửa " + RoleCategoryUpdateDto.TieuDe, "rolecategory", (int)ActionLogs.Edit, (int)StatusLogs.Success, RoleCategoryUpdateDto.Id);
+                // //await AddLogAsync(UserIdentity.FullName + ": sửa " + RoleCategoryUpdateDto.TieuDe, "rolecategory", (int)ActionLogs.Edit, (int)StatusLogs.Success, RoleCategoryUpdateDto.Id);
                 return Ok(true);
             }
             catch (FormatException ex)
@@ -82,7 +82,7 @@ namespace EPS.API.Controllers
             try
             {
                 await _baseService.DeleteAsync<RoleCategory, int>(id);
-                // await AddLogAsync(UserIdentity.FullName + ": xóa " + id, "rolecategory", (int)ActionLogs.Delete, (int)StatusLogs.Success, id);
+                // //await AddLogAsync(UserIdentity.FullName + ": xóa " + id, "rolecategory", (int)ActionLogs.Delete, (int)StatusLogs.Success, id);
                 return Ok(true);
             }
             catch (FormatException ex)
@@ -103,7 +103,7 @@ namespace EPS.API.Controllers
             {
                 var RoleCategoryIds = ids.Split(',').Where(x => !string.IsNullOrEmpty(x)).Select(x => Convert.ToInt32(x)).ToArray();
                 await _baseService.DeleteAsync<RoleCategory, int>(RoleCategoryIds);
-                // await AddLogAsync(UserIdentity.FullName + ": xóa danh sách " + ids, "rolecategory", (int)ActionLogs.Delete, (int)StatusLogs.Success);
+                // //await AddLogAsync(UserIdentity.FullName + ": xóa danh sách " + ids, "rolecategory", (int)ActionLogs.Delete, (int)StatusLogs.Success);
                 return Ok(true);
             }
             catch (FormatException ex)

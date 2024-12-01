@@ -110,6 +110,60 @@ namespace EPS.Identity.Migrations
                     b.ToTable("GroupRolePermissions");
                 });
 
+            modelBuilder.Entity("EPS.Identity.Data.Entities.GroupTourGuide", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("EdgeIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GroupIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KeyName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastUpdatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ListEdges")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ListNodes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GroupTourGuides");
+                });
+
             modelBuilder.Entity("EPS.Identity.Data.Entities.GroupUser", b =>
                 {
                     b.Property<int>("Id")
@@ -245,6 +299,56 @@ namespace EPS.Identity.Migrations
                     b.ToTable("MenuManagers");
                 });
 
+            modelBuilder.Entity("EPS.Identity.Data.Entities.PasswordResetRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastUpdatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UserAgreeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserAgreeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PasswordResetRequests");
+                });
+
             modelBuilder.Entity("EPS.Identity.Data.Entities.Permission", b =>
                 {
                     b.Property<int>("Id")
@@ -324,6 +428,76 @@ namespace EPS.Identity.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("RoleCategories");
+                });
+
+            modelBuilder.Entity("EPS.Identity.Data.Entities.TourGuideNode", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClassOrId")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeletedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsClickElem")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsHtml")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsShow")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("KeyDiagram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastUpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastUpdatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NodeId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("PositionX")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("PositionY")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("StepIndex")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TextHtml")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("attachment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TourGuideNodes");
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.User", b =>
@@ -521,6 +695,23 @@ namespace EPS.Identity.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("EPS.Identity.Data.Entities.PasswordResetRequest", b =>
+                {
+                    b.HasOne("EPS.Identity.Data.Entities.User", "PasswordResetRequest_UserAgreeId")
+                        .WithMany("PasswordResetRequest_UserAgreeIds")
+                        .HasForeignKey("UserAgreeId");
+
+                    b.HasOne("EPS.Identity.Data.Entities.User", "PasswordResetRequest_UserId")
+                        .WithMany("PasswordResetRequest_UserIds")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PasswordResetRequest_UserAgreeId");
+
+                    b.Navigation("PasswordResetRequest_UserId");
+                });
+
             modelBuilder.Entity("EPS.Identity.Data.Entities.Role", b =>
                 {
                     b.HasOne("EPS.Identity.Data.Entities.RoleCategory", "Role_CategoryId")
@@ -591,6 +782,10 @@ namespace EPS.Identity.Migrations
             modelBuilder.Entity("EPS.Identity.Data.Entities.User", b =>
                 {
                     b.Navigation("GroupUsers");
+
+                    b.Navigation("PasswordResetRequest_UserAgreeIds");
+
+                    b.Navigation("PasswordResetRequest_UserIds");
 
                     b.Navigation("UserDetails");
                 });

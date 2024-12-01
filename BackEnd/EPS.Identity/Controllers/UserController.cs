@@ -144,10 +144,10 @@ namespace EPS.Identity.Controllers
             var idUser = await _authorizationService.CreateUser(oUserCreate);
             if (idUser == 0)
             {
-                // await AddLogAsync(UserIdentity.FullName + ": thêm " + oUserCreate.FullName, "USERS", (int)ActionLogs.Add, (int)StatusLogs.Error);
+                // //await AddLogAsync(UserIdentity.FullName + ": thêm " + oUserCreate.FullName, "USERS", (int)ActionLogs.Add, (int)StatusLogs.Error);
                 return BadRequest("Có lỗi trong quá trình tạo tại khoản!");
             }
-            // await AddLogAsync(UserIdentity.FullName + ": thêm " + oUserCreate.FullName, "USERS", (int)ActionLogs.Add, (int)StatusLogs.Success);
+            // //await AddLogAsync(UserIdentity.FullName + ": thêm " + oUserCreate.FullName, "USERS", (int)ActionLogs.Add, (int)StatusLogs.Success);
             #region Thêm mới Userinfo   
             UserInfoCreateDto userInfo = new UserInfoCreateDto();
             userInfo.Address = oUserCreate.Address;
@@ -189,10 +189,10 @@ namespace EPS.Identity.Controllers
             bool check = await _authorizationService.UpdateUser(id, oUserUpdate);
             if (!check)
             {
-                // await AddLogAsync(UserIdentity.FullName + ": sửa " + oUserUpdate.FullName, "USERS", (int)ActionLogs.Edit, (int)StatusLogs.Error);
+                // //await AddLogAsync(UserIdentity.FullName + ": sửa " + oUserUpdate.FullName, "USERS", (int)ActionLogs.Edit, (int)StatusLogs.Error);
                 return BadRequest("Có lỗi trong quá trình update tài khoản!");
             }
-            // await AddLogAsync(UserIdentity.FullName + ": sửa " + oUserUpdate.FullName, "USERS", (int)ActionLogs.Edit, (int)StatusLogs.Success);
+            // //await AddLogAsync(UserIdentity.FullName + ": sửa " + oUserUpdate.FullName, "USERS", (int)ActionLogs.Edit, (int)StatusLogs.Success);
             #region Update Userinfo   
             if (oUser.User.Id > 0)
             {
@@ -278,7 +278,7 @@ namespace EPS.Identity.Controllers
                 }
                 var oUserUpdate = new UserUpdateStatus() { Id = oUser.Id, Status = (int)EPS.Identity.Data.Enums.StatusUserEnum.Active, ModifiedDate = DateTime.Now };
                 await _baseService.UpdateAsync<User, UserUpdateStatus>(oUser.Id, oUserUpdate);
-                // await AddLogAsync(UserIdentity.FullName + ": kích hoạt" + oUser.FullName, "USERS", (int)ActionLogs.Edit, (int)StatusLogs.Success);
+                // //await AddLogAsync(UserIdentity.FullName + ": kích hoạt" + oUser.FullName, "USERS", (int)ActionLogs.Edit, (int)StatusLogs.Success);
                 return Ok();
             }
             catch (Exception ex)
@@ -305,7 +305,7 @@ namespace EPS.Identity.Controllers
                 }
                 var oUserUpdate = new UserUpdateStatus() { Id = oUser.Id, Status = (int)EPS.Identity.Data.Enums.StatusUserEnum.Deactive, ModifiedDate = DateTime.Now };
                 await _baseService.UpdateAsync<User, UserUpdateStatus>(oUser.Id, oUserUpdate);
-                // await AddLogAsync(UserIdentity.FullName + ": khóa" + oUser.FullName, "USERS", (int)ActionLogs.Edit, (int)StatusLogs.Success);
+                // //await AddLogAsync(UserIdentity.FullName + ": khóa" + oUser.FullName, "USERS", (int)ActionLogs.Edit, (int)StatusLogs.Success);
                 return Ok();
             }
             catch (Exception ex)
@@ -321,7 +321,7 @@ namespace EPS.Identity.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _authorizationService.DeleteUser(id);
-            // await AddLogAsync(UserIdentity.FullName + ": xóa " + id, "USERS", (int)ActionLogs.Delete, (int)StatusLogs.Success);
+            // //await AddLogAsync(UserIdentity.FullName + ": xóa " + id, "USERS", (int)ActionLogs.Delete, (int)StatusLogs.Success);
             return Ok(true);
         }
 
@@ -339,7 +339,7 @@ namespace EPS.Identity.Controllers
             {
                 var userIds = ids.Split(',').Select(x => Convert.ToInt32(x)).ToArray();
                 await _authorizationService.DeleteUser(userIds);
-                // await AddLogAsync(UserIdentity.FullName + ": xóa danh sách " + ids, "USERS", (int)ActionLogs.Delete, (int)StatusLogs.Success);
+                // //await AddLogAsync(UserIdentity.FullName + ": xóa danh sách " + ids, "USERS", (int)ActionLogs.Delete, (int)StatusLogs.Success);
                 return Ok(true);
             }
             catch (FormatException ex)
