@@ -145,14 +145,14 @@ export default function UserGroupList({
                       {permisson.per_Edit && !item.lstGroupIds.includes(id) && (
                         <FaUserPlus
                           className="cursor-pointer text-base mr-1 text-blue-800"
-                          titleAccess="Thêm"
+                          title="Thêm"
                           onClick={() => onAddUser(item.id)}
                         />
                       )}
                       {permisson.per_Edit && item.lstGroupIds.includes(id) && (
                         <FaUserMinus
                           className="cursor-pointer text-base mr-1 text-red-700"
-                          titleAccess="Xóa"
+                          title="Xóa"
                           onClick={() => onRemoveUser(item.id)}
                         />
                       )}

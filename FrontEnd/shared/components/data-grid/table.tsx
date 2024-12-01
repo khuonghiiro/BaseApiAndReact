@@ -361,7 +361,7 @@ export const Table = ({
                           return (
                             <td
                               style={{ cursor: "pointer" }}
-                              contentEditable={editLine}
+                              //contentEditable={editLine}
                               onBlur={(e) => {
                                 onBlurEditData(e, body({ item, index }));
                               }}

@@ -1,4 +1,7 @@
 ﻿using EPS.Identity.Dtos.UserInfo;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace EPS.Identity.Dtos.User
 {
@@ -18,7 +21,7 @@ namespace EPS.Identity.Dtos.User
     }
     public class UserInfoItem
     {
-        public int Id { get; set; }
+        public int Id { get; set; }        
         public UserInfoDetailDto User { get; set; }
         public List<int> GroupIds { get; set; }
         public UserInfoItem()

@@ -19,11 +19,11 @@ export default function DuLieuCrawlForm({
   onClose,
 }: IFormProps) {
   // Khai báo rõ ràng kiểu trả về của `React.lazy`
-  const ReactJson = React.lazy(() =>
-    import("react-json-view-lite").then((module) => ({
-      default: module.JsonView,
-    }))
-  );
+  // const ReactJson = React.lazy(() =>
+  //   import("react-json-view-lite").then((module) => ({
+  //     default: module.JsonView,
+  //   }))
+  // );
   const defaultMenu = {
     bangCauHinhId: "",
     data: "",

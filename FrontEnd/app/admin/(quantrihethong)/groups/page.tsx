@@ -133,21 +133,21 @@ export default function Page() {
                 {permisson.per_Edit && (
                   <MdManageAccounts
                     className="cursor-pointer text-base mr-2 text-blue-800"
-                    titleAccess="Phân quyền người dùng"
+                    title="Phân quyền người dùng"
                     onClick={() => actPermissionGroup(item)}
                   />
                 )}
                 {permisson.per_Edit && (
                   <MdGroup
                     className="cursor-pointer text-base mr-2 text-blue-800"
-                    titleAccess="Thêm người dùng"
+                    title="Thêm người dùng"
                     onClick={() => actAddOrUpdateUser(item)}
                   />
                 )}
                 {permisson.per_View && (
                   <MdRemoveRedEye
                     className="cursor-pointer text-base mr-1 text-blue-800"
-                    titleAccess="Xem chi tiết"
+                    title="Xem chi tiết"
                     onClick={() =>
                       dispatch({ type: ACTION_TYPES.READ, Id: item.id })
                     }
@@ -156,7 +156,7 @@ export default function Page() {
                 {permisson.per_Edit && (
                   <MdEdit
                     className="cursor-pointer text-base mr-1 text-blue-800"
-                    titleAccess="Chỉnh sửa"
+                    title="Chỉnh sửa"
                     onClick={() =>
                       dispatch({ type: ACTION_TYPES.EDIT, Id: item.id })
                     }
@@ -165,7 +165,7 @@ export default function Page() {
                 {permisson.per_Delete && (
                   <MdDelete
                     className="cursor-pointer text-base mr-1 text-red-700"
-                    titleAccess="Xóa"
+                    title="Xóa"
                     onClick={() =>
                       delAction(
                         item,

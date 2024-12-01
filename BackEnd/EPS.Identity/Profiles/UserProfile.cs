@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EPS.Identity.Dtos.User;
 using EPS.Identity.Data.Entities;
-using EPS.Identity.Dtos.UserInfo;
 
 namespace EPS.Identity.Profiles
 {
@@ -22,7 +21,7 @@ namespace EPS.Identity.Profiles
         public UserEntityToDto()
         {
             CreateMap<User, UserCreateDto>();
-            CreateMap<User, UserInfoGridDto>();
+            CreateMap<User, UserInfo>();
             CreateMap<User, UserInfoItem>()
                 .ForMember(dest => dest.GroupIds, mo => mo.MapFrom(src => src.GroupUsers.Select(x => x.Group.Id)))
                 .ForMember(dest => dest.User, mo => mo.MapFrom(src => src.UserDetails.FirstOrDefault()));
@@ -37,7 +36,7 @@ namespace EPS.Identity.Profiles
                 .ForMember(dest => dest.Sex, mo => mo.MapFrom(src => src.UserDetails.FirstOrDefault().Sex))
                 .ForMember(dest => dest.Address, mo => mo.MapFrom(src => src.UserDetails.FirstOrDefault().Address))
                 .ForMember(dest => dest.Avatar, mo => mo.MapFrom(src => src.UserDetails.FirstOrDefault().Avatar));
-            CreateMap<User, UserInfoGridDto>()
+            CreateMap<User, UserGridInfoDto>()
                 .ForMember(dest => dest.GroupCodes, mo => mo.MapFrom(src => src.GroupUsers.Select(x => x.Group.Code)));
         }
     }

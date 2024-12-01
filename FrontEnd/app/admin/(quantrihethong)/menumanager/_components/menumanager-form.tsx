@@ -18,7 +18,7 @@ export default function MenuManagerForm({
     title: "",
     url: "",
     stt: 1,
-    parentId: null,
+    parentId: "",
     groups: "",
     isShow: true,
     isBlank: false,

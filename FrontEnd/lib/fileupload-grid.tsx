@@ -135,7 +135,7 @@ export const FileAttachGrid = ({
               {action != "read" && (
                 <MdDelete
                   onClick={() => onDelete()}
-                  titleAccess="Xóa"
+                  title="Xóa"
                   className="cursor-pointer text-base text-red-800 ml-2"
                 />
               )}
@@ -163,7 +163,7 @@ export const FileAttachGrid = ({
                 <div style={{ float: "right" }}>
                   <MdEdit
                     onClick={handleClick}
-                    titleAccess="Cập nhật"
+                    title="Cập nhật"
                     className="cursor-pointer text-base text-blue-800"
                   />
                 </div>

@@ -13,3 +13,12 @@ Insert into "Permissions" ("Title", "Code") values (N'Sửa','02');
 Insert into "Permissions" ("Title", "Code") values (N'Xóa','03');
 Insert into "Permissions" ("Title", "Code") values (N'Phê duyệt','04');
 Insert into "Permissions" ("Title", "Code") values (N'Quyền chức năng','05');
+
+INSERT INTO "MenuManagers" ("Title", "Url", "Stt", "Icon", "Groups", "ParentId", "IsBlank", "IsShow")
+VALUES
+(N'Quản trị hệ thống', '/-', 1, NULL, ',1,', NULL, 0, 1),
+(N'Người dùng', '/admin/users', 2, NULL, ',1,', 2, 0, 1),
+(N'Menu', '/admin/menumanager', 3, NULL, ',1,', 2, 0, 1),
+(N'Cấu hình người dùng', '/admin/bangcauhinh', 3, NULL, ',1,', 2, 0, 1),
+(N'Nhóm người dùng', '/admin/groups', 5, NULL, ',1,', 2, 0, 1),
+(N'Nhóm quyền', '/admin/rolecategory', 1, NULL, ',1,', 2, 0, 1);

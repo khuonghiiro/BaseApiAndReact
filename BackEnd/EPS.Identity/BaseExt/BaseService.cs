@@ -44,8 +44,18 @@ namespace EPS.Identity.BaseExt
             // Bắt đầu từ truy vấn gốc của entity
             IQueryable<TEntity> entityQuery = _repository.Filter<TEntity>();
 
+            if (entityQuery == null)
+            {
+                entityQuery = Enumerable.Empty<TEntity>().AsQueryable();
+            }
+
             // Dự phòng cho các truy vấn phụ (nếu có)
             IQueryable<TDto> query = entityQuery.ProjectTo<TDto>(_mapper.ConfigurationProvider);
+
+            if (query == null)
+            {
+                query = Enumerable.Empty<TDto>().AsQueryable();
+            }
 
             // Lọc theo các predicate từ các tham số truyền vào
             var pagingPredicates = pagingParams.GetPredicates();
@@ -97,7 +107,16 @@ namespace EPS.Identity.BaseExt
             }
 
             // Trả về danh sách kết quả dưới dạng PagingResult
-            result.Data = await query.ToListAsync();
+            try
+            {
+                result.Data = await query.ToListAsync();
+
+            }
+            catch (System.NullReferenceException)
+            {
+                result.TotalRows = 0;
+                result.Data = new();
+            }
             return result;
         }
 
@@ -338,8 +357,17 @@ namespace EPS.Identity.BaseExt
                 query = query.Take(pagingParams.ItemsPerPage);
             }
 
-            pagingResult = result;
-            pagingResult.Data = await query.ToListAsync();
+            try
+            {
+                pagingResult = result;
+                pagingResult.Data = await query.ToListAsync();
+
+            }
+            catch (System.NullReferenceException)
+            {
+                pagingResult.TotalRows = 0;
+                pagingResult.Data = new();
+            }
             return result;
         }
 

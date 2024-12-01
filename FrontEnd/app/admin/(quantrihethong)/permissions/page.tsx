@@ -108,17 +108,17 @@ export default function Page() {
               <div className="flex flex-row">
                 {permisson.per_View && <MdRemoveRedEye
                   className="cursor-pointer text-base mr-1 text-blue-800"
-                  titleAccess="Xem chi tiết"
+                  title="Xem chi tiết"
                   onClick={() => dispatch({ type: ACTION_TYPES.READ, Id: item.id })}
                 />}
                 {permisson.per_Edit && <MdEdit
                   className="cursor-pointer text-base mr-1 text-blue-800"
-                  titleAccess="Chỉnh sửa"
+                  title="Chỉnh sửa"
                   onClick={() => dispatch({ type: ACTION_TYPES.EDIT, Id: item.id })}
                 />}
                 {permisson.per_Delete && <MdDelete
                   className="cursor-pointer text-base mr-1 text-red-700"
-                  titleAccess="Xóa"
+                  title="Xóa"
                   onClick={() => delAction(item, permissionsServices, data, setMeta, meta, mutate)}
                 />
                 }

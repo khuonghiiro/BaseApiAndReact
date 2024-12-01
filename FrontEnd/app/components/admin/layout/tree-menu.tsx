@@ -19,7 +19,7 @@ export default function TreeMenu({
   const router = useRouter();
 
   function nav() {
-    if (node.url && node.url != "/-") {
+    if (node.url && node.url != "/-" && node.url != "-" && node.url != "/") {
       router.push(node.url);
     }
     setSubmenuIndex(node.id);

@@ -32,5 +32,10 @@ namespace EPS.Identity.Data.Entities
         public bool IsBlank { get; set; }
         public bool IsShow { get; set; }
         public virtual ICollection<MenuManager>? Childrens { get; set; }
+
+        public MenuManager()
+        {
+
+        }
     }
 }

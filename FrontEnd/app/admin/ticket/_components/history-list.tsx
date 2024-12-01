@@ -57,7 +57,7 @@ export const HistoryList = ({ ticketId }: {
         renderItem={(item: any) => (
           <List.Item style={{ display: 'block' }}>
             <div>
-              <Link 
+              <Link rel="preload"
               className="mr-2"
               onClick={()=>onClickUser(item)}>
                 {item?.author}

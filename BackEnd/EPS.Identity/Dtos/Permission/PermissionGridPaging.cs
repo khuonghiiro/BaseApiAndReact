@@ -13,7 +13,7 @@ namespace EPS.Identity.Dtos.Permission
 
             if (!string.IsNullOrEmpty(FilterText))
             {
-                predicates.Add(x => x.Title.Contains(FilterText) || x.Code.Contains(FilterText));
+                predicates.Add(x => x.Title.Contains(FilterText)|| x.Code.Contains(FilterText));
             }
             if (!string.IsNullOrEmpty(Code))
             {

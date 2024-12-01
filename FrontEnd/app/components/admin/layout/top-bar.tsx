@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback, Fragment, useRef } from "react";
 
-import { FaBell } from "react-icons/fa";
 import { FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
-import { BiSolidMessageDetail } from "react-icons/bi";
 import { FaCaretDown } from "react-icons/fa";
 import { AiOutlineRetweet } from "react-icons/ai";
 import { MdOutlineLogout } from "react-icons/md";
@@ -14,21 +12,6 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useAuth } from "@/shared/Context/appAdminContext";
 import React from "react";
-import { contactServices } from "@/app/admin/(quantrihethong)/contact/services";
-
-import { notificationServices } from "@/app/admin/(quantrihethong)/notification/services";
-
-import { useWebSocket } from "@/app/admin/(quantrihethong)/websocket/services";
-import NumberedIcon from "@/app/admin/(quantrihethong)/contact/_components/numbered-icon";
-import { UserList } from "@/app/admin/(quantrihethong)/contact/_components/user-list";
-import PopupMessage from "@/app/admin/(quantrihethong)/chatuser/_components/popup-message";
-import NotificationList from "@/app/admin/(quantrihethong)/notification/_components/notification-list";
-import { NotificationTypeEnum, UserNotificationModel, WebsocketEnum } from "@/shared/model";
-import { chatUserServices } from "@/app/admin/(quantrihethong)/chatuser/services";
-import { useRouter } from "next/navigation";
-import { usePopupMsgContext } from "@/app/admin/(quantrihethong)/chatuser/_components/popup-msg-provider";
-import IntroPopup from "@/shared/components/intro-popup";
-import { useTour } from "@/lib/tour-context";
 
 const SideBar = dynamic(() => import("./side-bar"));
 // const ResetPassword = dynamic(
@@ -52,8 +35,7 @@ export default React.memo(function TopBar({
   showNav: boolean;
   setShowNav: any;
 }) {
-  const router = useRouter();
-  
+
   const { logout, user } = useAuth();
 
   const [edit, setEdit] = useState(false);
@@ -61,50 +43,7 @@ export default React.memo(function TopBar({
   const [userId, setUserId] = useState<number>(0);
   const [view, setView] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
-  const [viewCount, setViewCount] = useState<number>(0);
-  const [viewNotity, setViewNotity] = useState<number>(0);
-  // const [openPopups, setOpenPopups] = useState<{ userId: number; chatUserId: number | null; forceFocus: boolean }[]>([]);
-  const [popupPositions, setPopupPositions] = useState<{ [key: number]: { right: number } }>({});
   const [isOpen, setOpen] = useState(false);
-  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const [dynamicHeight, setDynamicHeight] = useState<number>(0);
-  const [tourUserShow, setTourUserShow] = useState(false);
-  const [isIntroOpen, setIntroOpen] = useState(false); // State for controlling intro popup
-
-  async function getViewCount(userId: number) {
-    try {
-      console.log("Lấy lượt tin nhắn chưa xem thành công");
-      let viewMsg = await contactServices.getViewAtUserId(userId);
-      setViewCount(viewMsg);
-
-    } catch (err: any) {
-      console.log("Lấy lượt tin nhắn chưa xem không thành công");
-      return 0;
-    }
-  }
-
-  async function getViewCountNotification(userId: number) {
-    try {
-      console.log("Lấy lượt thông báo chưa xem thành công");
-      let viewMsg = await notificationServices.getViewAtUserId(userId);
-      setViewNotity(viewMsg);
-
-    } catch (err: any) {
-      console.log("Lấy lượt thông báo chưa xem không thành công");
-      return 0;
-    }
-  }
-
-  async function getChatUserAtId(chatUserId: any) {
-    try {
-      console.log("Lấy data chatuser thành công");
-      return await chatUserServices.findById(chatUserId);
-
-    } catch (err: any) {
-      console.log("Lấy data chatuser không thành công");
-      return null;
-    }
-  }
 
   function logoutUser() {
     logout();
@@ -114,12 +53,9 @@ export default React.memo(function TopBar({
     setFullName(user.fullName);
 
     setUserId(user.idTaiKhoan);
-    getViewCount(user.idTaiKhoan);
-    getViewCountNotification(user.idTaiKhoan);
 
     return () => {
       setOpen(false);
-      setIsNotificationOpen(false);
     };
 
   }, [user]);
@@ -149,53 +85,6 @@ export default React.memo(function TopBar({
         </div>
         <div className="flex items-center pr-4 md:pr-4">
 
-          <Popover className="relative">
-            <div className="flex flex-1 flex-row mr-5 md:mr-8'">
-              <Popover.Button
-              
-                className="outline-none cursor-pointer text-slate-500 step-2"
-              >
-                <BiSolidMessageDetail color="#1c64f2" className="h-6 w-6" />
-              </Popover.Button>
-              <div className={`${viewCount > 0 ? 'ml-[-9px] mt-[-10px]' : ''}`}>
-                <NumberedIcon number={viewCount} color="#cf0e0e" />
-
-              </div>
-            </div>
-
-            <Transition
-              as={Fragment}
-              show={isOpen}
-              enter="transition ease-out duration-100"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Popover.Panel className="rounded-b-lg absolute w-[25%] z-[80] mt-[12px] origin-bottom-right bg-white shadow-lg"
-                style={{ position: 'fixed', right: '0px', overflow: 'hidden', height: dynamicHeight + "px" }}>
-               
-              </Popover.Panel>
-            </Transition>
-          </Popover>
-
-          <Popover className="relative">
-            <div className="flex flex-1 flex-row mr-5 md:mr-8">
-              <Popover.Button
-                className="outline-none text-slate-500 cursor-pointer step-3"
-                
-              >
-                <FaBell className="h-6 w-6" />
-              </Popover.Button>
-              <div className='ml-[-9px] mt-[-10px]' >
-                <NumberedIcon number={viewNotity} color="#cf0e0e" />
-
-              </div>
-            </div>
-
-          </Popover>
-
           <Menu
             as="div"
             className="relative inline-block text-left text-slate-500"
@@ -209,7 +98,7 @@ export default React.memo(function TopBar({
                     alt="profile picture"
                   />
                 </picture>
-                <span className="hidden md:block font-medium" onClick={() => setTourUserShow(true)}>{fullName}</span>
+                <span className="hidden md:block font-medium" >{fullName}</span>
                 <FaCaretDown className="ml-2 h-4 w-4" />
               </Menu.Button>
             </div>

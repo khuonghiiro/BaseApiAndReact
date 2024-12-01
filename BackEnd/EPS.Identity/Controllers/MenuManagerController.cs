@@ -128,8 +128,9 @@ namespace EPS.API.Controllers
             lstALL = new List<MenuManagerGridDto>();
             MenuManagerGridPaging paging = new MenuManagerGridPaging();
             paging.ItemsPerPage = 0;
-            var predicates = paging.GetPredicates();
-            lstALL = _baseService.FilterPaged<MenuManager, MenuManagerGridDto>(paging, predicates.ToArray()).Data;
+
+            var lstALLs = await _baseService.FilterPagedAsync<MenuManager, MenuManagerGridDto>(paging);
+            lstALL = lstALLs.Data;
             getMenuCon(0, lstALL, "");
             return Ok(new PagingResult<MenuManagerGridDto> { Data = treeView });
         }
@@ -162,8 +163,10 @@ namespace EPS.API.Controllers
             param.ItemsPerPage = -1;
             param.Page = 1;
             param.IsAllShow = true;
-            var predicates = param.GetPredicates();
-            lstALL = _baseService.FilterPaged<MenuManager, MenuManagerGridDto>(param, predicates.ToArray()).Data;
+
+            var lstALLs = await _baseService.FilterPagedAsync<MenuManager, MenuManagerGridDto>(param);
+            lstALL = lstALLs.Data;
+
             // là admin thì view hết
             if (UserIdentity.IsAdministrator)
             {
