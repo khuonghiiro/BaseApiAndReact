@@ -1,4 +1,4 @@
-using EPS.Identity.Pages;
+﻿using EPS.Identity.Pages;
 using EPS.Identity.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -62,19 +62,19 @@ namespace EPS.Identity.Repositories
             if (id is object[])
             {
                 TEntity val = _dbContext.Set<TEntity>().Find(id as object[]);
-                //if (val is IDeleteInfo<int> && (val as IDeleteInfo<int>).DeletedUserId.HasValue)
-                //{
-                //    throw new Exception("Invalid Id");
-                //}
+                if (val is IDeleteInfo<int> && (val as IDeleteInfo<int>).DeletedUserId.HasValue)
+                {
+                    throw new Exception("Invalid Id");
+                }
 
                 return val;
             }
 
             TEntity val2 = _dbContext.Set<TEntity>().Find(id);
-            //if (val2 is IDeleteInfo<int> && (val2 as IDeleteInfo<int>).DeletedUserId.HasValue)
-            //{
-            //    throw new Exception("Invalid Id");
-            //}
+            if (val2 is IDeleteInfo<int> && (val2 as IDeleteInfo<int>).DeletedUserId.HasValue)
+            {
+                throw new Exception("Invalid Id");
+            }
 
             return val2;
         }
@@ -89,19 +89,19 @@ namespace EPS.Identity.Repositories
             if (id is object[])
             {
                 TEntity val = await _dbContext.Set<TEntity>().FindAsync(id as object[]);
-                //if (val is IDeleteInfo<int> && (val as IDeleteInfo<int>).DeletedUserId.HasValue)
-                //{
-                //    throw new Exception("Invalid Id");
-                //}
+                if (val is IDeleteInfo<int> && (val as IDeleteInfo<int>).DeletedUserId.HasValue)
+                {
+                    throw new Exception("Invalid Id");
+                }
 
                 return val;
             }
 
             TEntity val2 = await _dbContext.Set<TEntity>().FindAsync(id);
-            //if (val2 is IDeleteInfo<int> && (val2 as IDeleteInfo<int>).DeletedUserId.HasValue)
-            //{
-            //    throw new Exception("Invalid Id");
-            //}
+            if (val2 is IDeleteInfo<int> && (val2 as IDeleteInfo<int>).DeletedUserId.HasValue)
+            {
+                throw new Exception("Invalid Id");
+            }
 
             return val2;
         }
@@ -311,11 +311,13 @@ namespace EPS.Identity.Repositories
             TEntity[] array = await Filter(predicates).ToArrayAsync();
             foreach (TEntity val in array)
             {
+                // Kiểm tra xem thực thể có implement interface ICascadeDelete.
                 if (val is ICascadeDelete)
                 {
                     (val as ICascadeDelete).OnDelete();
                 }
 
+                // Kiểm tra xem TEntity có implement interface IDeleteInfo<TUserKey>.
                 if (typeof(IDeleteInfo<TUserKey>).IsAssignableFrom(typeof(TEntity)))
                 {
                     AddDeleteInfo(val);
@@ -416,6 +418,7 @@ namespace EPS.Identity.Repositories
             {
                 ((IDeleteInfo<TUserKey>)(object)entity).DeletedDate = DateTime.Now;
                 ((IDeleteInfo<TUserKey>)(object)entity).DeletedUserId = _currentUser.UserId;
+                //((IDeleteInfo<TUserKey>)(object)entity).IsDeleted = true;
             }
         }
     }

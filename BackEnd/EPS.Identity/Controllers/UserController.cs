@@ -123,6 +123,12 @@ namespace EPS.Identity.Controllers
             return Ok(await _authorizationService.GetUserById(id));
         }
 
+        [HttpGet("auth/{id}")]
+        public async Task<IActionResult> GetAuthUserById(int id)
+        {
+            return Ok(await _authorizationService.GetUserById(id));
+        }
+
         [HttpGet("userinfo/{id}")]
         public async Task<IActionResult> GetUserInfoById(int id)
         {

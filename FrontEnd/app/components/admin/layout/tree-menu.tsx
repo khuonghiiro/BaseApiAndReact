@@ -1,15 +1,43 @@
 "use client";
-import { FaAngleDown } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
+import { FaAngleDown, FaAngleRight } from "react-icons/fa"; // Các icon không cần phải load động
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+// Hàm để load động icon từ react-icons
+const loadIcon = (iconName: string) => {
+  try {
+    const Icon =
+      require("react-icons/fa")[iconName] ||
+      require("react-icons/md")[iconName];
+    if (Icon) {
+      return <Icon />; // Trả về JSX element thay vì function
+    }
+    return <FaAngleRight />;
+  } catch (error) {
+    console.error("Error loading icon:", iconName, error);
+    return <FaAngleRight />; // fallback icon nếu có lỗi
+  }
+};
+
+// Hàm kiểm tra trạng thái active của node và các node con
+const isActive = (node: any, pathname: string): boolean => {
+  if (node.url === pathname) {
+    return true;
+  }
+  if (node.childrens?.length > 0) {
+    return node.childrens.some((child: any) => isActive(child, pathname));
+  }
+  return false;
+};
 
 export default function TreeMenu({
   node,
   pathname,
   lever,
+  iconnew,
 }: {
+  iconnew?: string;
   node: any;
   pathname: string;
   lever: number;
@@ -18,8 +46,10 @@ export default function TreeMenu({
   const [submenuIndex, setSubmenuIndex] = useState(0);
   const router = useRouter();
 
+  const active = isActive(node, pathname); // Kiểm tra trạng thái active
+
   function nav() {
-    if (node.url && node.url != "/-" && node.url != "-" && node.url != "/") {
+    if (node.url && node.url !== "/-" && node.url !== "-" && node.url !== "/") {
       router.push(node.url);
     }
     setSubmenuIndex(node.id);
@@ -35,14 +65,16 @@ export default function TreeMenu({
     <>
       {node.parentId && node.parentId > 0 ? (
         <li
-          className={`flex items-center gap-x-4 cursor-pointer p-2 pr-5 hover:bg-lemonyellow rounded-md mt-1
-                    ${node.url && node.url === pathname ? "active" : ""} ${
-            "pdl-" + (lever + 5)
-          }`}
+          className={`flex items-center gap-x-2 cursor-pointer p-2 pr-5 hover:bg-lemonyellow rounded-md mt-1
+                    ${active ? "active" : ""} ${"pdl-" + (lever + 5)}`}
           onClick={() => nav()}
         >
           {node.childrens?.length > 0 ? (
             <>
+              <span className="text-xl block float-left !text-[18px]">
+                {/* Render icon từ prop iconnew */}
+                {iconnew && iconnew !== "" && loadIcon(iconnew)}
+              </span>
               <span className="flex-1">{node.title}</span>
               <FaAngleDown
                 className={`${
@@ -52,19 +84,26 @@ export default function TreeMenu({
             </>
           ) : (
             <>
+              <span className="text-xl block float-left !text-[15px]">
+                {/* Render icon từ prop iconnew */}
+                {iconnew && iconnew !== "" && loadIcon(iconnew)}
+              </span>
               <Link href={node.url}>{node.title}</Link>
             </>
           )}
         </li>
       ) : (
         <li
-          className="flex items-center gap-x-2 cursor-pointer p-1 hover:bg-lemonyellow rounded-md mt-1"
+          className={`flex items-center gap-x-2 cursor-pointer p-1 hover:bg-lemonyellow rounded-md mt-1 ${
+            active ? "active" : ""
+          }`}
           onClick={() => nav()}
         >
           {node.childrens?.length > 0 ? (
             <>
-              <span className="text-xl block float-left">
-                <MdDashboard />
+              <span className="text-xl block float-left !text-[18px]">
+                {/* Render icon từ prop iconnew */}
+                {iconnew && iconnew !== "" && loadIcon(iconnew)}
               </span>
               <span className="text-sm font-medium flex-1">{node.title}</span>
               <FaAngleDown
@@ -75,8 +114,9 @@ export default function TreeMenu({
             </>
           ) : (
             <>
-              <span className="text-xl block float-left">
-                <MdDashboard />
+              <span className="text-xl block float-left !text-[18px]">
+                {/* Render icon từ prop iconnew */}
+                {iconnew && iconnew !== "" && loadIcon(iconnew)}
               </span>
               <span className="text-sm font-medium flex-1">
                 <Link href={node.url}>{node.title}</Link>
@@ -93,6 +133,7 @@ export default function TreeMenu({
               <TreeMenu
                 key={child.id}
                 node={child}
+                iconnew={child.icon}
                 pathname={pathname}
                 lever={lever + 1}
               />

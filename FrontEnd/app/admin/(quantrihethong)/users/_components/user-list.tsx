@@ -12,7 +12,7 @@ import {
 import { useReducer, useState, useEffect } from "react";
 import { userServices } from "../services";
 import { IoMdAdd } from "react-icons/io";
-import { MdEdit } from "react-icons/md";
+import { MdBlock, MdCheckCircle, MdEdit, MdLockReset, MdOutlinePassword } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { MdRemoveRedEye } from "react-icons/md";
 import { AiOutlineRetweet } from "react-icons/ai";
@@ -21,6 +21,9 @@ import { IoMdUnlock } from "react-icons/io";
 import { toast } from "react-toastify";
 import { confirm } from "@/shared/components/confirm";
 import dynamic from "next/dynamic";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { FaBan, FaUserCheck } from "react-icons/fa6";
+import { FaCheckCircle, FaUserTimes } from "react-icons/fa";
 const UserForm = dynamic(() => import("../_components/user-form"));
 const ResetPassword = dynamic(
     () => import("../_components/user-reset-password")
@@ -56,6 +59,7 @@ export default function UserList(
             });
         }
     };
+    
     
     const onClose = async (isRefresh: boolean) => {
         dispatch({ type: ACTION_TYPES.CLOSE });
@@ -164,23 +168,23 @@ export default function UserList(
                         body={({ item }) => (
                             <div className="flex flex-row">
                                 {permisson.per_Edit && (
-                                    <AiOutlineRetweet
-                                        className="cursor-pointer text-base mr-1 text-blue-800"
+                                    <MdOutlinePassword
+                                        className="cursor-pointer text-base mr-1 text-green-800"
                                         title="Đặt lại mật khẩu"
                                         onClick={() =>  onResetPassword(item.username)}
                                     />
                                 )}
                                 {item.status === 1 && permisson.per_Edit ? (
-                                    <IoMdUnlock
+                                    <FaUserCheck 
                                         className="cursor-pointer text-base mr-1 text-blue-800"
                                         title="kích hoạt"
                                         onClick={() => active(item)}
                                     />
                                 ) : (
                                     permisson.per_Edit && (
-                                        <IoMdLock
+                                        <FaUserTimes 
                                             className="cursor-pointer text-base mr-1 text-red-700"
-                                            title="khóa"
+                                            title="Huỷ kích hoạt"
                                             onClick={() => deactive(item)}
                                         />
                                     )

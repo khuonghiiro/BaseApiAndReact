@@ -18,8 +18,9 @@ export default function MenuManagerForm({
     title: "",
     url: "",
     stt: 1,
-    parentId: "",
+    parentId: null,
     groups: "",
+    icon:"FaGenderless",
     isShow: true,
     isBlank: false,
     groupIds: [],
@@ -129,9 +130,9 @@ export default function MenuManagerForm({
                 </div>
                 <div className="">
                   <TanetInput
-                    label="Icon"
+                    label="Icon (Thuộc loại Font Awesome 5)"
                     view={state?.viewMode}
-                    type="number"
+                    type="string"
                     id="icon"
                     name="icon"
                   />

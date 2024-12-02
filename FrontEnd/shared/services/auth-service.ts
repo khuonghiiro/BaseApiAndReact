@@ -33,6 +33,22 @@ export const AuthService = () => {
     }
   };
 
+  const setOauth = (data: any) => {
+    try {
+      // Lưu thông tin OAuth vào Cookies
+      Cookies.set("oauth", JSON.stringify(data.oauth), { expires: 7 }); // Lưu OAuth token
+      Cookies.set("oauthRoles", JSON.stringify(data.roles), { expires: 7 }); // Lưu roles nếu có
+
+      // Nếu muốn lưu thêm vào localStorage
+      if (typeof window !== "undefined") {
+        localStorage.setItem("oauth", JSON.stringify(data.oauth));
+        localStorage.setItem("oauthRoles", JSON.stringify(data.roles));
+      }
+    } catch (err) {
+      console.error("Error setting OAuth data:", err);
+    }
+  };
+
   const getOauth = () => {
     try {
       const oauth = Cookies.get("oauth");
@@ -73,6 +89,7 @@ export const AuthService = () => {
   };
   return {
     login,
+    setOauth,
     getOauth,
     logout,
     loginFrontend,

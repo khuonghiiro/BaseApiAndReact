@@ -1,10 +1,10 @@
 import useSWR from 'swr';
-import { BaseService } from '@/shared/services';
+import { BaseService, useCustomSWR } from '@/shared/services';
 import api from '@/shared/services/axios-custom';
 import { Meta } from '@/shared/model';
 class services extends BaseService {
   GetList = (meta: Meta) => {
-    const { data, error, isLoading, mutate } = useSWR([this.url, meta], () => this.getMany(meta));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>([this.url, meta], () => this.getMany(meta));
     return {
       data,
       error,
@@ -13,7 +13,7 @@ class services extends BaseService {
     };
   };
   GetById = (id: number) => {
-    const { data, error, isLoading, mutate } = useSWR(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
     return {
       data,
       error,
@@ -22,7 +22,7 @@ class services extends BaseService {
     };
   };
   GetParent = () => {
-    const { data, isLoading } = useSWR('api/menupublic', () => api.get('api/menupublic'));
+    const { data, isLoading } = useCustomSWR<any>('api/menupublic', () => api.get('api/menupublic'));
     return {
       data: data?.data.map((item: any) => {
         return {
@@ -35,7 +35,7 @@ class services extends BaseService {
   };
 
   GetMenuCha = () => {
-    const { data } = useSWR('api/menupublic/selectmenu', () => api.get('api/menupublic/selectmenu'));
+    const { data } = useCustomSWR<any>('api/menupublic/selectmenu', () => api.get('api/menupublic/selectmenu'));
     return {
       data: data?.data.map((item: any) => {
         return {
@@ -47,7 +47,7 @@ class services extends BaseService {
   };
 
   GetMenuPublic = () => {
-    const { data } = useSWR('api/menupublic/selectmenu/public', () => api.get('api/menupublic/selectmenu/public'));
+    const { data } = useCustomSWR<any>('api/menupublic/selectmenu/public', () => api.get('api/menupublic/selectmenu/public'));
     return {
       data
     };

@@ -1,10 +1,10 @@
 import useSWR from 'swr';
-import { BaseService } from '@/shared/services';
+import { BaseService, useCustomSWR } from '@/shared/services';
 import api from '@/shared/services/axios-custom';
 import { Meta } from '@/shared/model';
 class services extends BaseService {		
 	GetList = () => {
-		const { data, error, isLoading, mutate } = useSWR(`api/thongkeadmin/thuongmai`, () => api.get(`api/thongkeadmin/thuongmai`));
+		const { data, error, isLoading, mutate } = useCustomSWR<any>(`api/thongkeadmin/thuongmai`, () => api.get(`api/thongkeadmin/thuongmai`));
 		return {
 			data,
 			error,
@@ -13,7 +13,7 @@ class services extends BaseService {
 		};
 	};
     GetListCongNghiep = () => {		
-		const { data, isLoading } = useSWR(`api/thongkeadmin/congnghiep`, () => api.get(`api/thongkeadmin/congnghiep`));
+		const { data, isLoading } = useCustomSWR<any>(`api/thongkeadmin/congnghiep`, () => api.get(`api/thongkeadmin/congnghiep`));
 		return {
 			data,
 			// error,
@@ -23,7 +23,7 @@ class services extends BaseService {
 	};
 	
     GetListNangLuong = () => {		
-		const { data, isLoading } = useSWR(`api/thongkeadmin/nangluong`, () => api.get(`api/thongkeadmin/nangluong`));
+		const { data, isLoading } = useCustomSWR<any>(`api/thongkeadmin/nangluong`, () => api.get(`api/thongkeadmin/nangluong`));
 		return {
 			data,
 			// error,

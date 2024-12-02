@@ -183,6 +183,11 @@ namespace EPS.Identity.Services
             return await _baseService.FindAsync<User, UserDetailDto>(id);
         }
 
+        public async Task<UserDetailDto> GetAuthUser(int id, string code)
+        {
+            return await _baseService.FindAsync<User, UserDetailDto>(id);
+        }
+
         public async Task<UserDetailDto> GetUserByUserName(string userName)
         {
             var user = await _userManager.FindByNameAsync(userName);

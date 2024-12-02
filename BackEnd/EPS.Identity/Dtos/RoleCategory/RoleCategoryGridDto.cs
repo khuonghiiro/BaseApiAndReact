@@ -68,6 +68,8 @@ namespace EPS.Identity.Dtos.RoleCategory
         public string Title { get; set; }
         public List<TreeRoleItem> Children { get; set; }
         public bool IsRole { get; set; }
+
+        public string Key { get; set; } 
         public TreeRoleItem() {
             Children=new List<TreeRoleItem>();
         }

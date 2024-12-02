@@ -15,6 +15,8 @@ import {
 } from "react-icons/ai";
 import { toast } from "react-toastify";
 import ConfirmationDialog, { confirm } from "@/shared/components/confirm";
+import { MdLockReset, MdOutlinePassword } from "react-icons/md";
+import { RiLockPasswordFill } from "react-icons/ri";
 export const TabUserPasswordRequest = ({ onResetPassword }: {
     onResetPassword: (userName: string, passwordId?: number, statusRequest?: number) => void;
 }) => {
@@ -171,7 +173,7 @@ export const TabUserPasswordRequest = ({ onResetPassword }: {
                         title="Tác vụ"
                         body={({ item }) => (
                             <div className="flex flex-row">
-                                {<AiOutlineRetweet
+                                {<MdOutlinePassword
                                      className={`cursor-pointer text-lg mr-1 ${(item.status != 0) ? 'text-gray-400 cursor-not-allowed' : 'text-blue-800'}`}
                                     title="Đặt lại mật khẩu"
                                     //onClick={() => dispatch({ type: ACTION_TYPES.READ, Id: item.id })}

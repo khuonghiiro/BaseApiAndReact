@@ -1,10 +1,10 @@
 import useSWR from 'swr';
-import { BaseService } from '@/shared/services';
+import { BaseService, useCustomSWR } from '@/shared/services';
 import api from '@/shared/services/axios-custom';
 import { Meta } from '@/shared/model';
 class services extends BaseService {
   GetList = (meta: Meta) => {
-    const { data, error, isLoading, mutate } = useSWR([this.url, meta], () => this.getManyCus(meta));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>([this.url, meta], () => this.getManyCus(meta));
     return {
       data,
       error,
@@ -13,7 +13,7 @@ class services extends BaseService {
     };
   };
   GetAllGroups = () => {
-    const { data, isLoading } = useSWR('api/groups', () => api.get('api/groups'));
+    const { data, isLoading } = useCustomSWR<any>('api/groups', () => api.get('api/groups'));
     return {
       data: data?.data.map((item: any) => {
         return {
@@ -26,7 +26,7 @@ class services extends BaseService {
   };
 
   GetAllGroupsSelectValueCode = () => {
-    const { data, isLoading } = useSWR('api/groups', () => api.get('api/groups'));
+    const { data, isLoading } = useCustomSWR<any>('api/groups', () => api.get('api/groups'));
     return {
       data: data?.data.map((item: any) => {
         return {
@@ -53,7 +53,7 @@ class services extends BaseService {
   };
 
   GetAllUsers = (excludeId: number, page: number, limit: number = 10) => {
-    const { data, error, isLoading } = useSWR(`api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false`, () =>
+    const { data, error, isLoading } = useCustomSWR<any>(`api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false`, () =>
       api.get(`api/users/lists?ExcludeId=${excludeId}&page=${page}&SortBy=fullName&SortDesc=false`)
     );
   
@@ -74,7 +74,7 @@ class services extends BaseService {
   };
 
   GetUserById = (id: number) => {
-    const { data, error, isLoading, mutate } = useSWR(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
     return {
       data,
       error,
@@ -83,7 +83,7 @@ class services extends BaseService {
     };
   };
   GetTreeMenu = () => {
-    const { data, error, isLoading, mutate } = useSWR<any>('api/menumanager/treemenu', () => api.get('api/menumanager/treemenu'), { revalidateOnFocus: false });
+    const { data, error, isLoading, mutate } = useCustomSWR<any>('api/menumanager/treemenu', () => api.get('api/menumanager/treemenu'), { revalidateOnFocus: false });
     return {
       data,
       error,
@@ -118,7 +118,7 @@ class services extends BaseService {
     return res;
   };
   // GetDonVi = () => { 
-  //   const { data, isLoading } = useSWR('api/donvinoibo/treeselect', () => api.get('api/donvinoibo/treeselect'));
+  //   const { data, isLoading } = useCustomSWR<any>('api/donvinoibo/treeselect', () => api.get('api/donvinoibo/treeselect'));
   //   if (data && data.data) {
   //     let arr = data.data;
   //     this.addValueToTree(arr, 1);

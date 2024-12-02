@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 const SideBar = forwardRef<HTMLDivElement, {}>((props, ref) => {
   const { data } = userServices.GetTreeMenu();
   const pathname = usePathname();
-
   return (
     <div
       ref={ref}  // Truyền ref vào div chính của Sidebar
@@ -25,7 +24,7 @@ const SideBar = forwardRef<HTMLDivElement, {}>((props, ref) => {
       </div>
       <ul className="pt-2 pl-2">
         {data && data?.data && data?.data?.map((menu: any) => (
-          <TreeMenu key={menu.id} node={menu} pathname={pathname} lever={0} />
+          <TreeMenu key={menu.id} node={menu} iconnew={menu.icon} pathname={pathname} lever={0} />
         ))}
       </ul>
     </div>

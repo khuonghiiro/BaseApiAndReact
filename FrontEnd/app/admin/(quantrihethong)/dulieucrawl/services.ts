@@ -1,10 +1,10 @@
 import useSWR from 'swr';
-import { BaseService } from '@/shared/services';
+import { BaseService, useCustomSWR } from '@/shared/services';
 import api from '@/shared/services/axios-custom';
 import { Meta } from '@/shared/model';
 class services extends BaseService {
   GetList = (meta: Meta) => {
-    const { data, error, isLoading, mutate } = useSWR<any>([this.url, meta], () => this.getMany(meta));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>([this.url, meta], () => this.getMany(meta));
     return {
       data,
       error,
@@ -13,7 +13,7 @@ class services extends BaseService {
     };
   };
   GetById = (id: any) => {
-    const { data, error, isLoading, mutate } = useSWR<any>(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
   
     return {
       data:{ ...data, listDataFields: data?.listFields?JSON.parse(data?.listFields):[] },
@@ -24,7 +24,7 @@ class services extends BaseService {
   };
 
   GetAllBangCauHinh = () => {
-    const { data, isLoading } = useSWR('crawl/api/bangcauhinh', () => api.get('crawl/api/bangcauhinh?page=1&itemPerPage=-1'));
+    const { data, isLoading } = useCustomSWR<any>('crawl/api/bangcauhinh', () => api.get('crawl/api/bangcauhinh?page=1&itemPerPage=-1'));
     return {
       data: data?.data.map((item: any) => {
         return {

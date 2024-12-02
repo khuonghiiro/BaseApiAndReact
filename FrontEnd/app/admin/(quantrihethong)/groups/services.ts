@@ -1,10 +1,10 @@
 import useSWR from 'swr';
-import { BaseService } from '@/shared/services';
+import { BaseService, useCustomSWR } from '@/shared/services';
 import api from '@/shared/services/axios-custom';
 import { Meta } from '@/shared/model';
 class services extends BaseService {
   GetList = (meta: Meta) => {
-    const { data, error, isLoading, mutate } = useSWR([this.url, meta], () => this.getMany(meta));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>([this.url, meta], () => this.getMany(meta));
     return {
       data,
       error,
@@ -13,7 +13,7 @@ class services extends BaseService {
     };
   };
   GetById = (id: number) => {
-    const { data, error, isLoading, mutate } = useSWR(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
     return {
       data,
       error,
@@ -39,7 +39,7 @@ class services extends BaseService {
       FilterText: title,
       ...filter,
     };
-    const { data, error, isLoading, mutate } = useSWR(['api/roles/listper', meta], () => api.get('api/roles/listper', { params: params }));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(['api/roles/listper', meta], () => api.get('api/roles/listper', { params: params }));
     return {
       data,
       error,
@@ -55,7 +55,7 @@ class services extends BaseService {
   };
 
   GetTreeCategory = (id: number) => {
-    const { data, isLoading } = useSWR(id ? `${'api/rolecategory/tree'}${id}` : null, () => api.get('api/rolecategory/tree'));
+    const { data, isLoading } = useCustomSWR<any>(id ? `${'api/rolecategory/tree'}${id}` : null, () => api.get('api/rolecategory/tree'));
     if (data) {
       return {
         data: data,
@@ -70,7 +70,7 @@ class services extends BaseService {
     }
   };
   GetPer = (groupid: number, roleid:number) => {
-    const { data, isLoading } = useSWR((groupid&&roleid) ? `api/grouprolepermission/getper/${groupid}/${roleid}` : null, () => api.get(`api/grouprolepermission/getper/${groupid}/${roleid}`));
+    const { data, isLoading } = useCustomSWR<any>((groupid&&roleid) ? `api/grouprolepermission/getper/${groupid}/${roleid}` : null, () => api.get(`api/grouprolepermission/getper/${groupid}/${roleid}`));
     return {
       data: data,
       isLoading,

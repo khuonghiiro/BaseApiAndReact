@@ -17,8 +17,27 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { MdRemoveRedEye } from "react-icons/md";
 import dynamic from "next/dynamic";
+import { FaAngleRight } from "react-icons/fa";
 const MenuManagerForm = dynamic(() => import("./_components/menumanager-form"));
 const ConfirmationDialog = dynamic(() => import("@/shared/components/confirm"));
+
+// Hàm để load động icon từ react-icons
+const loadIcon = (iconName: string) => {
+  try {
+    const Icon =
+      // require("react-icons/fa")[iconName] ||
+      require("react-icons/fa")[iconName];
+      
+    if (Icon) {
+      return <Icon />; // Trả về JSX element thay vì function
+    }
+    console.warn(`Icon "${iconName}" not found. Using default.`);
+    return <FaAngleRight />;
+  } catch (error) {
+    console.error("Error loading icon:", iconName, error);
+    return <FaAngleRight />; // fallback icon nếu có lỗi
+  }
+};
 
 export default function Page() {
   const [meta, setMeta] = useState<any>({
@@ -136,7 +155,7 @@ export default function Page() {
             body={({ item }) => <span>{item.parent}</span>}
           />
           <GridView.Table.Column
-            title="Hiển thị 2"
+            title="Hiển thị"
             sortKey="isShow"
             isShowFilter={false}
             filterName="isShow"
@@ -144,6 +163,18 @@ export default function Page() {
             editLine={false}
             body={({ item }) => (
               <span>{item.isShow ? "Hiển thị" : "Không hiển thị"}</span>
+            )}
+          />
+           <GridView.Table.Column
+            title="Icon"
+            sortKey="icon"
+            isShowFilter={false}
+            filterName="icon"
+            typeColumn="icon"
+            editLine={false}
+            className="!text-center"
+            body={({ item }) => (
+              <span>{item.icon ? loadIcon(item.icon) : ""}</span>
             )}
           />
           <GridView.Table.Column

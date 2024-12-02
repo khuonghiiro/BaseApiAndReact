@@ -2,6 +2,7 @@ import axios from "axios";
 import { ApiUrl } from "../../public/app-setting";
 import { AuthService } from "./auth-service";
 import { useAuth } from "../Context/appAdminContext";
+import { toast } from "react-toastify";
 const api = axios.create({
     baseURL: ApiUrl,
 });
@@ -39,7 +40,6 @@ api.interceptors.response.use(
     },
     async (err) => {
         const { logout } = AuthService();
-
         const originalConfig = err?.config;
         if (
             originalConfig?.url !== "api/login" &&
@@ -58,6 +58,22 @@ api.interceptors.response.use(
                 return Promise.reject(_error);
             }
         }
+
+        // if (
+        //     originalConfig?.url !== "api/login" &&
+        //     err?.response?.status === 403 &&
+        //     !originalConfig?._retry
+        // ) {
+            
+        //     try {
+        //         const { getOauth } = AuthService();
+        //         const oauth = getOauth();
+        //     } catch (_error) {
+        //         logout();
+        //         window.location.href = "/login";
+        //         return Promise.reject(_error);
+        //     }
+        // }
 
         return Promise.reject(err);
     }

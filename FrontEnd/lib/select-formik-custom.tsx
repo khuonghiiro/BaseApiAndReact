@@ -18,7 +18,7 @@ type ColourOption = {
   readonly isDisabled?: boolean;
 };
 
-export const TanetSelect = (props: Props) => {
+export const TanetSelect = (props: any) => {
   const { name, label, view, required, defaultValue, ...restProps } = props;
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();

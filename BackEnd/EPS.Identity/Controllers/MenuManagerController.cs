@@ -77,6 +77,7 @@ namespace EPS.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(MenuManagerCreateDto MenuManagerCreateDto)
         {
+            MenuManagerCreateDto.Icon = MenuManagerCreateDto.Icon != null ? MenuManagerCreateDto.Icon.Trim() : string.Empty;
             await _baseService.CreateAsync<MenuManager, MenuManagerCreateDto>(MenuManagerCreateDto);
             // //await AddLogAsync(UserIdentity.FullName + ": thêm " + MenuManagerCreateDto.Title, "MENUMANAGERS", (int)ActionLogs.Add, (int)StatusLogs.Success);
             return Ok();

@@ -1,11 +1,11 @@
 import useSWR from "swr";
-import { BaseService } from "@/shared/services";
+import { BaseService, useCustomSWR } from "@/shared/services";
 import api from "@/shared/services/axios-custom";
 import { Meta } from "@/shared/model";
 import { ApiUrl } from "@/public/app-setting";
 class services extends BaseService {
   GetList = (meta: Meta) => {
-    const { data, error, isLoading, mutate } = useSWR<any>(
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(
       [this.url, meta],
       () => this.getMany(meta)
     );
@@ -17,7 +17,7 @@ class services extends BaseService {
     };
   };
   GetById = (id: number) => {
-    const { data, error, isLoading, mutate } = useSWR<any>(
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(
       id ? `${this.url}${id}` : null,
       () => api.get(`${this.url}/${id}`)
     );
@@ -74,7 +74,7 @@ class services extends BaseService {
     return res;
   };
   GetListProject = () => {
-    const { data, isLoading } = useSWR("helpdesk/api/project/myproject", () =>
+    const { data, isLoading } = useCustomSWR<any>("helpdesk/api/project/myproject", () =>
       api.get("helpdesk/api/project/myproject")
     );
     return {
@@ -97,7 +97,7 @@ class services extends BaseService {
       };
     }
 
-    const { data, isLoading } = useSWR<any>(
+    const { data, isLoading } = useCustomSWR<any>(
       "api/users/userselect",
       () => api.get(`api/users/userselect?strIds=${strIds}`)
     );
@@ -125,7 +125,7 @@ class services extends BaseService {
     return res;
   };
   getAllEnum = (name: string) => {
-    const { data, error, isLoading, mutate } = useSWR<any>(
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(
       `${this.url}/enum/${name}`,
       () => api.get(`${this.url}/enum/${name}`)
     );
@@ -137,7 +137,7 @@ class services extends BaseService {
     };
   };
   GetListHistory = (ticketId: number) => {
-    const { data, error, isLoading, mutate } = useSWR<any>(
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(
       "helpdesk/api/tickethistory/" + ticketId,
       () => api.get(`helpdesk/api/tickethistory?ticketId=${ticketId}&page=1&itemsPerPage=-1&SortBy=Id&SortDesc=false`)
     );
@@ -152,7 +152,7 @@ class services extends BaseService {
   GetListTicketComment = (ticketId: any, parentCommentId?: number | null) => {
 
     let pcId = parentCommentId ?? -1;
-    const { data, error, isLoading, mutate } = useSWR<any>(
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(
       "helpdesk/api/ticketcomment/" + ticketId,
       () => api.get(`helpdesk/api/ticketcomment?ticketId=${ticketId}&parentCommentId=${pcId}&page=1&itemsPerPage=-1&SortBy=Id&SortDesc=false`)
     );

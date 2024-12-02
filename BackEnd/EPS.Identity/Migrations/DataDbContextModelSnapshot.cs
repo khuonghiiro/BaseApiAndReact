@@ -53,7 +53,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FileUploads");
+                    b.ToTable("FileUploads", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.Group", b =>
@@ -76,7 +76,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.GroupRolePermission", b =>
@@ -107,7 +107,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("GroupRolePermissions");
+                    b.ToTable("GroupRolePermissions", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.GroupTourGuide", b =>
@@ -161,7 +161,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupTourGuides");
+                    b.ToTable("GroupTourGuides", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.GroupUser", b =>
@@ -184,7 +184,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GroupUsers");
+                    b.ToTable("GroupUsers", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.IdentityClient", b =>
@@ -219,7 +219,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasKey("IdentityClientId");
 
-                    b.ToTable("IdentityClients");
+                    b.ToTable("IdentityClients", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.IdentityRefreshToken", b =>
@@ -251,7 +251,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasKey("IdentityRefreshTokenId");
 
-                    b.ToTable("IdentityRefreshTokens");
+                    b.ToTable("IdentityRefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.MenuManager", b =>
@@ -296,7 +296,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("MenuManagers");
+                    b.ToTable("MenuManagers", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.PasswordResetRequest", b =>
@@ -346,7 +346,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PasswordResetRequests");
+                    b.ToTable("PasswordResetRequests", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.Permission", b =>
@@ -369,7 +369,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.Role", b =>
@@ -397,7 +397,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.RoleCategory", b =>
@@ -427,7 +427,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("RoleCategories");
+                    b.ToTable("RoleCategories", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.TourGuideNode", b =>
@@ -497,7 +497,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TourGuideNodes");
+                    b.ToTable("TourGuideNodes", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.User", b =>
@@ -577,7 +577,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasIndex("DeletedUserId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.UserDetail", b =>
@@ -618,7 +618,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserDetails");
+                    b.ToTable("UserDetails", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.DataProtection.EntityFrameworkCore.DataProtectionKey", b =>
@@ -637,7 +637,7 @@ namespace EPS.Identity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DataProtectionKeys");
+                    b.ToTable("DataProtectionKeys", (string)null);
                 });
 
             modelBuilder.Entity("EPS.Identity.Data.Entities.GroupRolePermission", b =>

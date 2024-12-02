@@ -4,7 +4,7 @@ import { ApiUrl } from "@/public/app-setting";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useFormikContext } from "formik";
-import { BaseService } from "@/shared/services";
+import { BaseService, useCustomSWR } from "@/shared/services";
 
 interface IFieUpload {
   multiple?: boolean;

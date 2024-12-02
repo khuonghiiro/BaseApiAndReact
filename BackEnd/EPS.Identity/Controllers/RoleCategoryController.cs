@@ -137,6 +137,7 @@ namespace EPS.API.Controllers
                 itemtree.Id = item.Id;
                 itemtree.Title = item.TieuDe;
                 itemtree.IsRole = false;
+                itemtree.Key = Guid.NewGuid().ToString();
                 if (item.Children.Count > 0)
                 {
                     var lstItem = renderDataTree(item.Children);
@@ -145,7 +146,13 @@ namespace EPS.API.Controllers
                 if (item.LstRole.Count > 0)
                 {
                     foreach (var itemRole in item.LstRole)
-                        itemtree.Children.Add(new TreeRoleItem() { Id = itemRole.Id, Title = itemRole.Description, IsRole = true });
+                        itemtree.Children.Add(new TreeRoleItem() 
+                        { 
+                            Id = itemRole.Id,
+                            Title = itemRole.Description, 
+                            Key = Guid.NewGuid().ToString(),
+                            IsRole = true 
+                        });
                 }
                 LstReturn.Add(itemtree);
             }

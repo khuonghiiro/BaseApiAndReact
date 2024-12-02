@@ -5,5 +5,7 @@ namespace EPS.Identity.Repositories.Interface
         DateTime? DeletedDate { get; set; }
 
         TUserKey? DeletedUserId { get; set; }
+
+        // bool? IsDeleted { get; set; }
     }
 }

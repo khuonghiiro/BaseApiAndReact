@@ -1,10 +1,10 @@
 import useSWR from 'swr';
-import { BaseService } from '@/shared/services';
+import { BaseService, useCustomSWR } from '@/shared/services';
 import api from '@/shared/services/axios-custom';
 import { Meta } from '@/shared/model';
 class services extends BaseService {
   GetList = (meta: Meta) => {
-    const { data, error, isLoading, mutate } = useSWR([this.url, meta], () => this.getManyConfigExcel(meta, 1));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>([this.url, meta], () => this.getManyConfigExcel(meta, 1));
     return {
       data,
       error,
@@ -13,7 +13,7 @@ class services extends BaseService {
     };
   };
   GetById = (id: number) => {
-    const { data, error, isLoading, mutate } = useSWR(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(id ? `${this.url}${id}` : null, () => api.get(`${this.url}/${id}`));
     return {
       data,
       error,

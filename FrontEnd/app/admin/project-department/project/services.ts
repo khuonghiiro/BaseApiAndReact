@@ -1,10 +1,10 @@
 import useSWR from "swr";
-import { BaseService } from "@/shared/services";
+import { BaseService, useCustomSWR } from "@/shared/services";
 import api from "@/shared/services/axios-custom";
 import { Meta } from "@/shared/model";
 class services extends BaseService {
   GetList = (meta: Meta) => {
-    const { data, error, isLoading, mutate } = useSWR<any>(
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(
       [this.url, meta],
       () => this.getMany(meta)
     );
@@ -16,7 +16,7 @@ class services extends BaseService {
     };
   };
   GetById = (id: number) => {
-    const { data, error, isLoading, mutate } = useSWR<any>(
+    const { data, error, isLoading, mutate } = useCustomSWR<any>(
       id ? `${this.url}${id}` : null,
       () => api.get(`${this.url}/${id}`)
     );
@@ -29,7 +29,7 @@ class services extends BaseService {
   };
 
   GetAllDepartments = () => {
-    const { data, isLoading } = useSWR<any>("helpdesk/api/department", () =>
+    const { data, isLoading } = useCustomSWR<any>("helpdesk/api/department", () =>
       api.get("helpdesk/api/department")
     );
 
@@ -45,7 +45,7 @@ class services extends BaseService {
   };
 
   GetAllUsers = (groupCode: string) => {
-    const { data, isLoading } = useSWR<any>(
+    const { data, isLoading } = useCustomSWR<any>(
       "api/users/userselect/" + groupCode,
       () => api.get("api/users/userselect?groupCode=" + groupCode)
     );
@@ -60,7 +60,7 @@ class services extends BaseService {
     };
   };
   GetAllUsersCustomer = (groupCode: string, date: Date) => {
-    const { data, isLoading } = useSWR<any>(
+    const { data, isLoading } = useCustomSWR<any>(
       "api/users/userselect/" + groupCode + date.toString(),
       () => api.get("api/users/userselect?groupCode=" + groupCode)
     );
