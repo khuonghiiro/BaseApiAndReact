@@ -8,10 +8,11 @@ import { useEffect, useState, useReducer } from "react";
 import { array, number, object, ref, string } from "yup";
 import { userServices } from "../services";
 import { formReducer, INITIAL_STATE_FORM, computedTitle } from "@/lib/common";
-import React from "react";
+import React, { forwardRef } from "react";
 import { AuthService } from '@/shared/services';
 
-export default React.memo(function UserForm({ show, action, id, onClose }: IFormProps) {
+// Component UserForm sử dụng forwardRef và React.memo
+const UserForm = forwardRef<HTMLFormElement, IFormProps>(({ show, action, id, onClose }, formRef) => {
     const defaultUser = {
         username: "",
         password: "",
@@ -152,7 +153,7 @@ export default React.memo(function UserForm({ show, action, id, onClose }: IForm
     return (
         <>
             <Modal show={show} size="xl" loading={loading}>
-                <Formik
+                <Formik ref = {formRef}
                     onSubmit={(values) => {
                         onSubmit(values);
                     }}
@@ -284,3 +285,7 @@ export default React.memo(function UserForm({ show, action, id, onClose }: IForm
         </>
     );
 });
+
+
+// Sử dụng React.memo để tối ưu hóa việc render lại
+export default React.memo(UserForm);

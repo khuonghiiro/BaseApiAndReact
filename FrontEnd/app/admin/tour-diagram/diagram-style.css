@@ -37,7 +37,7 @@
 .react-flow__edge-path {
     cursor: pointer;
     stroke: blue !important;
-    stroke-width: var(--xy-edge-stroke-width, var(--xy-edge-stroke-width-default));
+    strokeWidth: var(--xy-edge-strokeWidth, var(--xy-edge-strokeWidth-default));
     fill: none;
 }
 

@@ -1,6 +1,6 @@
 "use client";
 import { FaAngleDown, FaAngleRight } from "react-icons/fa"; // Các icon không cần phải load động
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -31,17 +31,15 @@ const isActive = (node: any, pathname: string): boolean => {
   return false;
 };
 
-export default function TreeMenu({
-  node,
-  pathname,
-  lever,
-  iconnew,
-}: {
-  iconnew?: string;
+// Component TreeMenu được chuyển thành forwardRef
+const TreeMenu = forwardRef<HTMLLIElement, {
   node: any;
   pathname: string;
   lever: number;
-}) {
+  iconnew?: string;
+}>
+(({ node, pathname, lever, iconnew }, ref) => {
+
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const [submenuIndex, setSubmenuIndex] = useState(0);
   const router = useRouter();
@@ -64,7 +62,7 @@ export default function TreeMenu({
   return (
     <>
       {node.parentId && node.parentId > 0 ? (
-        <li
+        <li ref={ref}
           className={`flex items-center gap-x-2 cursor-pointer p-2 pr-5 hover:bg-lemonyellow rounded-md mt-1
                     ${active ? "active" : ""} ${"pdl-" + (lever + 5)}`}
           onClick={() => nav()}
@@ -93,7 +91,7 @@ export default function TreeMenu({
           )}
         </li>
       ) : (
-        <li
+        <li ref={ref}
           className={`flex items-center gap-x-2 cursor-pointer p-1 hover:bg-lemonyellow rounded-md mt-1 ${
             active ? "active" : ""
           }`}
@@ -142,4 +140,9 @@ export default function TreeMenu({
         )}
     </>
   );
-}
+});
+
+// Đặt displayName cho component
+TreeMenu.displayName = "TreeMenu";
+
+export default TreeMenu;

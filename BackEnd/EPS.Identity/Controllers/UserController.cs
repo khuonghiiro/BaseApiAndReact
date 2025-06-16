@@ -5,6 +5,7 @@ using EPS.Identity.Data.Enums;
 using EPS.Identity.Dtos.GroupUser;
 using EPS.Identity.Dtos.User;
 using EPS.Identity.Dtos.UserInfo;
+using EPS.Identity.Repositories.Interface;
 using EPS.Identity.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +19,13 @@ namespace EPS.Identity.Controllers
     {
         private AuthorizationService _authorizationService;
         private CommonService _baseService;
-        public UserController(AuthorizationService authorizationService, CommonService baseService)
+        private IUserIdentity<int> _userIdentity;
+
+        public UserController(AuthorizationService authorizationService, CommonService baseService, IUserIdentity<int> userIdentity)
         {
             _authorizationService = authorizationService;
             _baseService = baseService;
+            _userIdentity = userIdentity;
         }
 
         [HttpPut("password")]
@@ -123,10 +127,29 @@ namespace EPS.Identity.Controllers
             return Ok(await _authorizationService.GetUserById(id));
         }
 
-        [HttpGet("auth/{id}")]
-        public async Task<IActionResult> GetAuthUserById(int id)
+        [HttpGet("auth/{method}/{status}/{url}")]
+        public async Task<IActionResult> GetAuthUserById(string method, string status, string url)
         {
-            return Ok(await _authorizationService.GetUserById(id));
+            string textCrud = string.Empty;
+            switch (method)
+            {
+                case "get":
+                    textCrud = "Danh sách";
+                    break;
+                case "post":
+                    textCrud = "Thêm bản ghi";
+                    break;
+                case "put":
+                    textCrud = "Cập nhật bản ghi";
+                    break;
+                case "delete":
+                    textCrud = "Xoá bản ghi";
+                    break;
+            }
+            var linkApi = url.Replace("api/", "");
+
+            var userLogin = await _authorizationService.GetUserById(_userIdentity.TaiKhoanID);
+            return Ok(await _authorizationService.GetUserById(_userIdentity.TaiKhoanID));
         }
 
         [HttpGet("userinfo/{id}")]

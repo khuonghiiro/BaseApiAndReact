@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, Fragment, useRef } from "react";
+import { useState, useEffect, useCallback, Fragment, useRef, forwardRef } from "react";
 
 import { FaBars } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
@@ -28,13 +28,9 @@ const UserForm = dynamic(
   () => import("@/app/admin/(quantrihethong)/users/_components/user-form")
 );
 
-export default React.memo(function TopBar({
-  showNav,
-  setShowNav
-}: {
-  showNav: boolean;
-  setShowNav: any;
-}) {
+
+const TopBar = forwardRef<HTMLDivElement, { showNav: boolean, setShowNav: any }>(
+  ({ showNav, setShowNav }, ref) => {
 
   const { logout, user } = useAuth();
 
@@ -70,7 +66,7 @@ export default React.memo(function TopBar({
   return (
     <>
 
-      <div
+      <div ref={ref}
         className={`fixed w-full z-40 h-12 bg-white flex justify-between items-center transition-all duration-[450ms] ${showNav ? "pl-56" : ""
           }`}
       >
@@ -206,3 +202,6 @@ export default React.memo(function TopBar({
     </>
   );
 });
+
+// Sử dụng React.memo để tối ưu hóa việc render lại
+export default React.memo(TopBar);

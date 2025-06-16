@@ -64,7 +64,7 @@ export default function Page() {
     }
   };
   const onReset = (userName: string, passId?: number, statusRequest?: number) => {
-    if(statusRequest == null || statusRequest !== 0) return;
+    // if(statusRequest == null || statusRequest !== 0) return;
     setShowResetPassword(true);
     setUsername(userName);
     setPasswordId(passId ?? 0)

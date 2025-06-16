@@ -17,6 +17,7 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@headlessui/react": "^2.2.0",
+    "@popperjs/core": "^2.11.8",
     "@turf/bbox": "^7.1.0",
     "@turf/boolean-point-in-polygon": "^7.1.0",
     "@turf/random": "^7.1.0",

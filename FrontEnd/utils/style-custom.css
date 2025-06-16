@@ -1,4 +1,34 @@
-  .focus-visible-ring {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
-  }
+.focus-visible-ring {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+/* Dòng kẻ trái */
+.border-left-custom::before {
+  content: '';
+  position: absolute;
+  left: 22px; /* Điều chỉnh để border thụt vào trong */
+  top: 25;
+  bottom: 0;
+  width: 1px; /* Chiều rộng của border */
+  background-color: #ccc; /* Màu viền */
+  z-index: 1; /* Đặt z-index cho pseudo-element */
+}
+
+/* Dòng kẻ ngang */
+.border-bottom-custom {
+  content: '';
+  position: absolute;
+  left: -8px;
+  right: 97%;
+  top: 50%; /* Điều chỉnh để dòng kẻ nằm giữa phần tử */
+  height: 1px; /* Chiều cao của dòng kẻ ngang */
+  background-color: #ccc; /* Màu của dòng kẻ ngang */
+  z-index: 0; /* Đặt z-index thấp hơn so với border-left */
+}
+
+/* Đặt z-index cao hơn cho phần tử khác để nó đè lên pseudo-element */
+.node-content {
+  position: relative; /* Để sử dụng z-index */
+  z-index: 4; /* Đặt giá trị z-index cao hơn */
+}

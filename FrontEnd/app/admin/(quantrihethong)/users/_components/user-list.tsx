@@ -33,7 +33,6 @@ const ConfirmationDialog = dynamic(() => import("@/shared/components/confirm"));
 export default function UserList(
     {
         onResetPassword,
-
     } : {
             onResetPassword: (userName: string) => void;
         }
